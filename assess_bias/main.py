@@ -1,5 +1,4 @@
 from utility_functions import *
-from print_similarities import * 
 from gensim.models.keyedvectors import KeyedVectors
 import argparse
 import sys, os
