@@ -3,7 +3,8 @@ import we
 import json
 import numpy as np
 import argparse
-import sys
+import sys, os
+sys.path.append("..")
 if sys.version_info[0] < 3:
     import io
     open = io.open
@@ -39,37 +40,46 @@ def debias(E, gender_specific_words, definitional, equalize):
 
 
 if __name__ == "__main__":
-
+    # define args
     parser = argparse.ArgumentParser()
-    parser.add_argument("embedding_filename", help="The name of the embedding")
-    parser.add_argument("definitional_filename", help="JSON of definitional pairs")
-    parser.add_argument("gendered_words_filename", help="File containing words not to neutralize (one per line)")
-    parser.add_argument("equalize_filename", help="???.bin")
-    parser.add_argument("debiased_filename", help="???.bin")
+    parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding")
+    parser.add_argument("--definitional_filename", default = "da_definitional_pairs.json", help="Definitional pairs for creating gender direction")
+    parser.add_argument("--gendered_words_filename", default = "da_gender_specific_full.json",help="File containing words not to neutralize (one per line)")
+    parser.add_argument("--equalize_filename", default = "da_equalize_pairs.json", help="Word pairs for equalizing")
+    parser.add_argument("--debiased_filename", default = "debiased_model.bin", help="???.bin")
 
+    # parse args
     args = parser.parse_args()
-    print(args)
 
-    with open(args.definitional_filename, "r") as f:
+    # retrieve args
+    embedding_filename = os.path.join("..","embeddings", args.embedding_filename)
+    definitional_filename = os.path.join("..","data", args.definitional_filename)
+    print(definitional_filename)
+    gendered_words_filename = os.path.join("..","data", args.gendered_words_filename)
+    equalize_filename = os.path.join("..","data", args.equalize_filename)
+    debiased_filename = os.path.join("..","embeddings", args.debiased_filename)
+
+
+    with open(definitional_filename, "r") as f:
         defs = json.load(f)
     print("definitional", defs)
 
-    with open(args.equalize_filename, "r") as f:
+    with open(equalize_filename, "r") as f:
         equalize_pairs = json.load(f)
 
-    with open(args.gendered_words_filename, "r") as f:
+    with open(gendered_words_filename, "r") as f:
         gender_specific_words = json.load(f)
     print("gender specific", len(gender_specific_words), gender_specific_words[:10])
 
-    E = we.WordEmbedding(args.embedding_filename)
+    E = we.WordEmbedding(embedding_filename)
 
     print("Debiasing...")
     debias(E, gender_specific_words, defs, equalize_pairs)
 
     print("Saving to file...")
-    if args.embedding_filename[-4:] == args.debiased_filename[-4:] == ".bin":
-        E.save_w2v(args.debiased_filename)
+    if embedding_filename[-4:] == debiased_filename[-4:] == ".bin":
+        E.save_w2v(debiased_filename)
     else:
-        E.save(args.debiased_filename)
+        E.save(debiased_filename)
 
     print("\n\nDone!\n")

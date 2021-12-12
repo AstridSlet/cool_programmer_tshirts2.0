@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument("--embedding_filename", type=str, default="DAGW-model(1).bin", help="Filename embedding")
     parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
     parser.add_argument("--gender_specific_seed_words", type=str, default="da_gender_specific_seed.json", help="Filename gender specific seed")
-    parser.add_argument("--outfile", type=str, default = "gender_specific_full.json", help="Filename gender specific full")
+    parser.add_argument("--outfile", type=str, default = "da_gender_specific_full.json", help="Filename gender specific full")
 
     # parse arguments
     args = parser.parse_args()
@@ -95,5 +95,6 @@ if __name__ == "__main__":
     # save full gender specific
     with open(outfile, "w") as f:
         json.dump(full_gender_specific, f)
-    print("DONE!")
+    
+    print("\n\nDone!\n")
         

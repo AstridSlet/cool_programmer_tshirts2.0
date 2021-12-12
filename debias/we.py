@@ -1,6 +1,7 @@
 from __future__ import print_function, division
 import re
 import sys
+sys.path.append("..")
 import numpy as np
 import scipy.sparse
 from sklearn.decomposition import PCA
