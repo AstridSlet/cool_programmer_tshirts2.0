@@ -1,4 +1,5 @@
 from utility_functions import *
+from print_similarities import *
 from gensim.models.keyedvectors import KeyedVectors
 import argparse
 import sys, os
@@ -37,24 +38,23 @@ if __name__ == "__main__":
     family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
 
     # get WEAT scores model
-    #weat_func(model, args.model_type, "career", "family", 10000, male, female, career, family)
-    #weat_func(model, args.model_type, "science", "arts", 10000, male, female, science, arts)
-    #weat_func(model, args.model_type, "math", "arts", 10000, male, female, math, arts)
+    weat_func(model, args.model_type, "career", "family", 10000, male, female, career, family)
+    weat_func(model, args.model_type, "science", "arts", 10000, male, female, science, arts)
+    weat_func(model, args.model_type, "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    #weat_func(debiased_model, args.model_type, "career", "family", 10000, male, female, career, family)
-    #weat_func(debiased_model, args.model_type, "science", "arts", 10000, male, female, science, arts)
-    #weat_func(debiased_model, args.model_type, "math", "arts", 10000, male, female, math, arts)
+    weat_func(debiased_model, args.model_type, "career", "family", 10000, male, female, career, family)
+    weat_func(debiased_model, args.model_type, "science", "arts", 10000, male, female, science, arts)
+    weat_func(debiased_model, args.model_type, "math", "arts", 10000, male, female, math, arts)
 
-    print_similarities(model)
-    print_similarities(debiased_model)
+    # get similarity scores: professions projected onto gender direction
+    most1, least1 = print_similarities(args.embedding_filename)
+    most2, least2 = print_similarities(args.debiased_filename)
 
+    print(most1, least1)
+    print(most2, least2)
 
-    #words_to_plot = set(male)
-    # restrict embedding
-    #restrict_wv(wv = model, restricted_word_set = words_to_plot)
-    # plot
-    #tsne_plot(model)
+    # save as csv??
 
     '''
     #hjemmelavet
