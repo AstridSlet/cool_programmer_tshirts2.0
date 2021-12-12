@@ -159,7 +159,7 @@ def weat_func(wordembedding, model_name, theme1, theme2, permutations, male, fem
     name = f"WEAT_{theme1}_{theme2}_{model_name}.csv"
 
     # save results 
-    results.to_csv(os.path.join("/work/Exam/dk-weat/output/", name), index = True)
+    results.to_csv(os.path.join("..", "output", name), index = True)
 
     return print(results)
 
