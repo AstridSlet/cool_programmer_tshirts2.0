@@ -19,6 +19,7 @@ Tolga Bolukbasi, Kai-Wei Chang, James Zou, Venkatesh Saligrama, and Adam Kalai
 
 
 def debias(E, gender_specific_words, definitional, equalize):
+    '''
     # do PCA on definitional word pairs
     num_components=10
     pca = we.doPCA(definitional, E, num_components)
@@ -27,7 +28,9 @@ def debias(E, gender_specific_words, definitional, equalize):
 
     # use top component as gender direction
     gender_direction = pca.components_[0]
-
+    '''
+    gender_direction = plotPCA(E, definitional, 0.95)
+    
     # save gender direction (to print most extreme job professions)
     np.savetxt(os.path.join("..", "output", "gender_direction.csv"), gender_direction, delimiter=',')
 
@@ -95,9 +98,9 @@ if __name__ == "__main__":
 
     E = we.WordEmbedding(embedding_filename)
 
-    print("Debiasing...")
+    print("Debiasing:", embedding_filename)
     debias(E, gender_specific_words, defs, equalize_pairs)
-
+'''
     print("Saving to file...")
     if embedding_filename[-4:] == debiased_filename[-4:] == ".bin":
         E.save_w2v(debiased_filename)
@@ -105,3 +108,4 @@ if __name__ == "__main__":
         E.save(debiased_filename)
 
     print("\n\nDone!\n")
+'''
