@@ -5,6 +5,7 @@ import gensim
 import pandas as pd
 from numpy import dot
 from numpy.linalg import norm
+import random
 import sys, os
 sys.path.append(os.path.join('..'))
 
@@ -162,4 +163,3 @@ def weat_func(wordembedding, model_name, theme1, theme2, permutations, male, fem
     results.to_csv(os.path.join("..", "output", name), index = True)
 
     return print(results)
-
