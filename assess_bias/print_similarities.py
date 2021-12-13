@@ -1,20 +1,14 @@
 import gensim
-import json
 from debias.we import WordEmbedding
 from numpy import loadtxt
 import os, sys
 sys.path.append("..")
 
 
-def print_similarities(embedding):
+def print_similarities(embedding, profession_words):
     # load model as WE class
     embedding_filename =  os.path.join("..", "embeddings", embedding)
     E = WordEmbedding(embedding_filename)
-    
-    # load professions
-    professions_path = os.path.join("..", "data", "professions.json")
-    with open(professions_path, "r") as f:
-        profession_words = json.load(f)
 
     # load gender direction (from debias function)
     gender_direction = loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')

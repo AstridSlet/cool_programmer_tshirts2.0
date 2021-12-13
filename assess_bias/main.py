@@ -2,9 +2,10 @@ from utility_functions import *
 from print_similarities import *
 from gensim.models.keyedvectors import KeyedVectors
 import argparse
+import json
 import sys, os
 sys.path.append(os.path.join('..'))
-#from viz import *
+from viz2 import plot_professions
 
 
 
@@ -38,23 +39,32 @@ if __name__ == "__main__":
     family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
 
     # get WEAT scores model
-    weat_func(model, args.model_type, "career", "family", 10000, male, female, career, family)
-    weat_func(model, args.model_type, "science", "arts", 10000, male, female, science, arts)
-    weat_func(model, args.model_type, "math", "arts", 10000, male, female, math, arts)
+    weat_func(model, f"biased_{args.model_type}", "career", "family", 10000, male, female, career, family)
+    weat_func(model, f"biased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
+    weat_func(model, f"biased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    weat_func(debiased_model, args.model_type, "career", "family", 10000, male, female, career, family)
-    weat_func(debiased_model, args.model_type, "science", "arts", 10000, male, female, science, arts)
-    weat_func(debiased_model, args.model_type, "math", "arts", 10000, male, female, math, arts)
+    weat_func(debiased_model, f"debiased_{args.model_type}", "career", "family", 10000, male, female, career, family)
+    weat_func(debiased_model, f"debiased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
+    weat_func(debiased_model, f"debiased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
+
+    # load professions
+    professions_path = os.path.join("..", "data", "professions.json")
+    with open(professions_path, "r") as f:
+        profession_words = json.load(f)
 
     # get similarity scores: professions projected onto gender direction
-    most1, least1 = print_similarities(args.embedding_filename)
-    most2, least2 = print_similarities(args.debiased_filename)
+    most1, least1 = print_similarities(args.embedding_filename, profession_words)
+    most2, least2 = print_similarities(args.debiased_filename, profession_words)
 
     print(most1, least1)
     print(most2, least2)
 
     # save as csv??
+
+    # plot professions
+    plot_professions(model, f"biased_{args.model_type}", profession_words)
+    plot_professions(debiased_model, f"debiased_{args.model_type}", profession_words)
 
     '''
     #hjemmelavet

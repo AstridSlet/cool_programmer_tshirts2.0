@@ -4,23 +4,26 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 from numpy import loadtxt
+import sys, os
+sys.path.append(os.path.join('..'))
 if sys.version_info[0] < 3:
     import io
     open = io.open
 plt.style.use("seaborn")
 
 
-model = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/DAGW-model.bin', binary=True) 
-debiased_model = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/debiased_model.bin', binary=True)
-debiased_model_noeq = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/no_eq_debiased_model.bin', binary=True)
+#model = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/DAGW-model.bin', binary=True) 
+#debiased_model = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/debiased_model.bin', binary=True)
+#debiased_model_noeq = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/no_eq_debiased_model.bin', binary=True)
+#wordlist = ['revisor', 'sygeplejerske','prinsesse', 'dronning','skuespiller', 'skuespillerinde', 'advokat', 'hjælper',  'antropolog', 'arkæolog', 'arkitekt', 'kunstner',  'morder', 'astronaut', 'astronom', 'atlet',  'forfatter', 'bager', 'ballerina', 'fodboldspiller', 'bankmand', 'barber', 'baron', 'bartender', 'biolog', 'biskop', 'præst']
 
-wordlist = ['revisor', 'sygeplejerske','prinsesse', 'dronning','skuespiller', 'skuespillerinde', 'advokat', 'hjælper',  'antropolog', 'arkæolog', 'arkitekt', 'kunstner',  'morder', 'astronaut', 'astronom', 'atlet',  'forfatter', 'bager', 'ballerina', 'fodboldspiller', 'bankmand', 'barber', 'baron', 'bartender', 'biolog', 'biskop', 'præst']
-x_ax = ['kvinde', 'mand']
-y_ax = np.loadtxt('/work/Exam/dk-weat/output/neutral_specific_difference.csv', delimiter=',')
 
-def plot_professions(embedding, wordlist, x_axis, y_axis):
+def plot_professions(embedding, model_name, wordlist):
 
-    wordlist = x_axis + wordlist
+    x_ax = ['kvinde', 'mand']
+    y_ax = np.loadtxt(os.path.join("..", "output", "neutral_specific_difference.csv"), delimiter=',')
+
+    wordlist = x_ax + wordlist
     vectors = []
 
     for i in range(len(wordlist)):
@@ -29,7 +32,7 @@ def plot_professions(embedding, wordlist, x_axis, y_axis):
     # To-be basis
     x = (vectors[1]-vectors[0])
     #flipped
-    y = np.flipud(y_axis)
+    y = np.flipud(y_ax)
    
     # Get pseudo-inverse matrix
     W = np.array(vectors)
@@ -71,8 +74,8 @@ def plot_professions(embedding, wordlist, x_axis, y_axis):
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
     plt.axvline(color= 'grey')
     plt.axhline(color= 'grey')
-    plt.show()
+    plt.savefig(os.path.join("..", "output", f"{model_name}_gender_plot.png"))
 
-plot_professions(model, wordlist, x_ax, y_ax)
-plot_professions(debiased_model, wordlist, x_ax, y_ax)
-plot_professions(debiased_model_noeq, wordlist, x_ax, y_ax)
+#plot_professions(model, wordlist, x_ax, y_ax)
+#plot_professions(debiased_model, wordlist, x_ax, y_ax)
+#plot_professions(debiased_model_noeq, wordlist, x_ax, y_ax)
