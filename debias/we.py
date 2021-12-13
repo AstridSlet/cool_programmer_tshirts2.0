@@ -4,6 +4,9 @@ import sys
 sys.path.append("..")
 import numpy as np
 import scipy.sparse
+import matplotlib.pyplot as plt
+plt.style.use("seaborn")
+#from danlp.models.embeddings import load_wv_with_gensim
 from sklearn.decomposition import PCA
 if sys.version_info[0] < 3:
     import io
@@ -56,6 +59,9 @@ class WordEmbedding:
             model =gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
+        elif fname.endswith(".wv"):
+            model = load_wv_with_gensim(fname)
+
         else:
             vecs = []
             words = []
@@ -233,7 +239,7 @@ def text_plot_words(xs, ys, words, width = 90, height = 40, filename=None):
         print(string)
 
 
-def doPCA(pairs, embedding, num_components=10):
+def doPCA(pairs, embedding, num_components):
     matrix = []
     for a, b in pairs:
         center = (embedding.v(a) + embedding.v(b))/2
@@ -244,6 +250,19 @@ def doPCA(pairs, embedding, num_components=10):
     pca.fit(matrix)
     return pca
 
+def plotPCA(embedding, defonitional, n_components):
+
+# do PCA on definitional word pairs
+    pca = doPCA(definitional, embedding, n_components)
+    plt.bar(range(pca.n_components_), pca.explained_variance_ratio_, color = "seagreen")
+    plt.title("Explained variance by PCA components")
+    plt.xlabel("PCA components")
+    plt.ylabel("Explained variance")
+    print ("PCA plot saved to output folder")
+    plt.savefig(os.path.join("..", "output", "pca_plot.png"))
+    # use top component as gender direction
+    gender_direction = pca.components_[0]
+    return gender_direction
 
 def drop(u, v):
     return u - v * u.dot(v) / v.dot(v)
