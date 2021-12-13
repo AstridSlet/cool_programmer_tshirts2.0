@@ -5,7 +5,7 @@ import os, sys
 sys.path.append("..")
 
 
-def print_similarities(embedding, profession_words):
+def print_similarities(embedding, words_list):
     # load model as WE class
     embedding_filename =  os.path.join("..", "embeddings", embedding)
     E = WordEmbedding(embedding_filename)
@@ -14,7 +14,7 @@ def print_similarities(embedding, profession_words):
     gender_direction = loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
 
     # project professions onto gender dimesion
-    sp = sorted([(E.v(w).dot(gender_direction), w) for w in profession_words])
+    sp = sorted([(E.v(w).dot(gender_direction), w) for w in words_list])
 
     # print extreme professions
     return sp[:20], sp[-20:]

@@ -38,15 +38,16 @@ if __name__ == "__main__":
     career = ['leder', 'bestyrelse', 'professionel', 'virksomhed', 'løn', 'arbejde', 'forretning', 'karriere'] 
     family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
 
+    print("getting WEAT scores")
     # get WEAT scores model
-    weat_func(model, f"biased_{args.model_type}", "career", "family", 10000, male, female, career, family)
-    weat_func(model, f"biased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
-    weat_func(model, f"biased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(model, f"biased_{args.model_type}", "career", "family", 10000, male, female, career, family)
+    #weat_func(model, f"biased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
+    #weat_func(model, f"biased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    weat_func(debiased_model, f"debiased_{args.model_type}", "career", "family", 10000, male, female, career, family)
-    weat_func(debiased_model, f"debiased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
-    weat_func(debiased_model, f"debiased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(debiased_model, f"debiased_{args.model_type}", "career", "family", 10000, male, female, career, family)
+    #weat_func(debiased_model, f"debiased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
+    #weat_func(debiased_model, f"debiased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
 
     # load professions
     professions_path = os.path.join("..", "data", "professions.json")
