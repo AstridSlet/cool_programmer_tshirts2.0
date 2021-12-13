@@ -36,7 +36,8 @@ def plot_words(embedding, model_name, wordlist_full):
 
     # To-be basis
     x = (vectors[1]-vectors[0])
-    #flipped
+    
+    # flipped
     y = np.flipud(y_ax)
 
     # normalize
