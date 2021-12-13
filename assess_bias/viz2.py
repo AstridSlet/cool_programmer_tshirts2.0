@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 from numpy import loadtxt
-from utility_functions import sample_from_dict
 import sys, os
 sys.path.append(os.path.join('..'))
 if sys.version_info[0] < 3:
@@ -17,6 +16,8 @@ plt.style.use("seaborn")
 #debiased_model = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/debiased_model.bin', binary=True)
 #debiased_model_noeq = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/no_eq_debiased_model.bin', binary=True)
 #wordlist = ['revisor', 'sygeplejerske','prinsesse', 'dronning','skuespiller', 'skuespillerinde', 'advokat', 'hjælper',  'antropolog', 'arkæolog', 'arkitekt', 'kunstner',  'morder', 'astronaut', 'astronom', 'atlet',  'forfatter', 'bager', 'ballerina', 'fodboldspiller', 'bankmand', 'barber', 'baron', 'bartender', 'biolog', 'biskop', 'præst']
+#wordlist2 = [w for w in wordlist if w in model.vocab]
+
 
 def plot_words(embedding, model_name, wordlist_full):
 
@@ -27,16 +28,20 @@ def plot_words(embedding, model_name, wordlist_full):
     y_ax = np.loadtxt(os.path.join("..", "output", "neutral_specific_difference.csv"), delimiter=',')
 
     # choose only words that are in the embeddings
-    wordlist = [(embedding.vocab(w)) for w in wordlist_full]
-    wordlist = x_ax + wordlist
+    wordlist_sub = [w for w in wordlist_full if w in embedding.vocab]
+    wordlist = x_ax + wordlist_sub
 
     # retrieve vectors
-    vectors = [model[k] for k in wordlist]
+    vectors = [embedding[k] for k in wordlist]
 
     # To-be basis
     x = (vectors[1]-vectors[0])
     #flipped
     y = np.flipud(y_ax)
+
+    # normalize
+    x /= np.linalg.norm(x)
+    y /= np.linalg.norm(y)
    
     # Get pseudo-inverse matrix
     W = np.array(vectors)
@@ -79,7 +84,3 @@ def plot_words(embedding, model_name, wordlist_full):
     plt.axvline(color= 'grey')
     plt.axhline(color= 'grey')
     plt.savefig(os.path.join("..", "output", f"{model_name}_gender_plot.png"))
-
-#plot_professions(model, wordlist, x_ax, y_ax)
-#plot_professions(debiased_model, wordlist, x_ax, y_ax)
-#plot_professions(debiased_model_noeq, wordlist, x_ax, y_ax)
