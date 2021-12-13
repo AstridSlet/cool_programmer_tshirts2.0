@@ -12,37 +12,29 @@ if sys.version_info[0] < 3:
 plt.style.use("seaborn")
 
 
-#model = KeyedVectors.load_word2vec_format('/work/Exam/cool_programmer_tshirts2.0/embeddings/DAGW-model(1).bin', binary=True) 
-#debiased_model = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/debiased_model.bin', binary=True)
-#debiased_model_noeq = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/word2vec_model/no_eq_debiased_model.bin', binary=True)
-#wordlist = ['revisor', 'sygeplejerske','prinsesse', 'dronning','skuespiller', 'skuespillerinde', 'advokat', 'hjælper',  'antropolog', 'arkæolog', 'arkitekt', 'kunstner',  'morder', 'astronaut', 'astronom', 'atlet',  'forfatter', 'bager', 'ballerina', 'fodboldspiller', 'bankmand', 'barber', 'baron', 'bartender', 'biolog', 'biskop', 'præst']
-#wordlist2 = [w for w in wordlist if w in model.vocab]
-
-
 def plot_words(embedding, model_name, wordlist_full):
 
-    # define word pair for x-axis
-    x_ax = ['kvinde', 'mand']
+    # load x-axis
+    x = np.loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
 
     # load vector for y-axis
     y_ax = np.loadtxt(os.path.join("..", "output", "neutral_specific_difference.csv"), delimiter=',')
 
     # choose only words that are in the embeddings
-    wordlist_sub = [w for w in wordlist_full if w in embedding.vocab]
-    wordlist = x_ax + wordlist_sub
+    wordlist = [w for w in wordlist_full if w in embedding.vocab]
 
     # retrieve vectors
     vectors = [embedding[k] for k in wordlist]
 
     # To-be basis
-    x = (vectors[1]-vectors[0])
+    #x = (vectors[1]-vectors[0])
     
     # flipped
     y = np.flipud(y_ax)
 
     # normalize
-    x /= np.linalg.norm(x)
-    y /= np.linalg.norm(y)
+    #x /= np.linalg.norm(x)
+    #y /= np.linalg.norm(y)
    
     # Get pseudo-inverse matrix
     W = np.array(vectors)
@@ -63,14 +55,14 @@ def plot_words(embedding, model_name, wordlist_full):
     plt.title(label="Professions",
             fontsize=30,
             color="black")
-    plt.xlim([-1, 1])
+    plt.xlim([-0.75, 0.75])
     #plt.ylim([-0.25, 0.25])
-    print(Wp[0,0], Wp[1,0])
+
     
     #plot the wordlist
     plt.scatter(Wp[0,2:], Wp[1,2:], color = 'green', marker= "x")
     #plot kvinde and mand
-    plt.scatter(Wp[0,:2], Wp[1,:2], color = 'red', marker= "o", label = "axis of interest")
+    #plt.scatter(Wp[0,:2], Wp[1,:2], color = 'red', marker= "o", label = "axis of interest")
 
     rX = max(Wp[0,:])-min(Wp[0,:])
     rX = max(Wp[0,:])-min(Wp[0,:])

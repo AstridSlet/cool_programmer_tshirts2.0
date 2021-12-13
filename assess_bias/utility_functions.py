@@ -7,6 +7,7 @@ from numpy import dot
 from numpy.linalg import norm
 import random
 import sys, os
+
 sys.path.append(os.path.join('..'))
 
 def cosine_sim(v1, v2, embedding):
@@ -163,3 +164,20 @@ def weat_func(wordembedding, model_name, theme1, theme2, permutations, male, fem
     results.to_csv(os.path.join("..", "output", name), index = True)
 
     return print(results)
+
+
+# choose only words that are in the embeddings
+def choose_biased(embedding, words_full):
+    # take only words that are in embedding
+    wordlist = [w for w in words_full if w in embedding.vocab]
+    
+    # load gender direction (from debias function)
+    gender_direction = np.loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
+
+    # project words onto gender dimesion
+    sp = sorted([(embedding.get_vector(w).dot(gender_direction), w) for w in wordlist])
+    male, female = sp[:20], sp[-20:]
+    
+
+    # print extreme words
+    return sp[:20], sp[-20:]

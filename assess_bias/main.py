@@ -1,7 +1,8 @@
 from utility_functions import *
-from print_similarities import *
+#from print_similarities import *
 from gensim.models.keyedvectors import KeyedVectors
 import argparse
+import random
 import json
 import sys, os
 sys.path.append(os.path.join('..'))
@@ -28,7 +29,7 @@ if __name__ == "__main__":
     debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", args.debiased_filename), binary=True)
 
     # define attribute words
-    male = ['mandlig', 'mand','dreng','bror','han','ham','hans','søn'] 
+    male = ['mandlig', 'mand','dreng','bror','han','ham','hans','søn']
     female = ['kvindelig', 'kvinde', 'pige', 'søster', 'hun', 'hende', 'hendes', 'datter'] 
 
     # define target words
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     career = ['leder', 'bestyrelse', 'professionel', 'virksomhed', 'løn', 'arbejde', 'forretning', 'karriere'] 
     family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
 
-    print("getting WEAT scores")
+    #print("getting WEAT scores")
     # get WEAT scores model
     #weat_func(model, f"biased_{args.model_type}", "career", "family", 10000, male, female, career, family)
     #weat_func(model, f"biased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
@@ -54,18 +55,27 @@ if __name__ == "__main__":
     with open(professions_path, "r") as f:
         profession_words = json.load(f)
 
+    # load gender specific words
+    genderspecific_path = os.path.join("..", "data", "da_gender_specific_seed.json")
+    with open(genderspecific_path, "r") as f:
+        gender_specific_words = json.load(f)
+
+    # sample words 
+    profession_sample = random.sample(profession_words, 10)
+    print("professions")
+    print(profession_sample)
+    gender_specific_sample = random.sample(gender_specific_words, 10)
+    combined = profession_sample + gender_specific_sample
+    print("gender specific")
+    print(gender_specific_sample)
+
     # get similarity scores: professions projected onto gender direction
     #most1, least1 = print_similarities(args.embedding_filename, profession_words)
     #most2, least2 = print_similarities(args.debiased_filename, profession_words)
 
-    #print(most1, least1)
-    #print(most2, least2)
-
-    # save as csv??
-
-    # plot professions
-    plot_words(model, f"biased_{args.model_type}", profession_words)
-    plot_words(debiased_model, f"debiased_{args.model_type}", profession_words)
+    # plot words
+    plot_words(model, f"biased_{args.model_type}", combined)
+    plot_words(debiased_model, f"debiased_{args.model_type}", combined)
 
     '''
     #hjemmelavet
