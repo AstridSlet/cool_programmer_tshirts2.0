@@ -12,13 +12,13 @@ if sys.version_info[0] < 3:
 plt.style.use("seaborn")
  
 
-def plot_words(embedding, model_name, wordlist_full):
+def plot_words2(embedding, model_alias, wordlist_full):
 
     # load x-axis
     x = np.loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
 
     # load vector for y-axis
-    y_ax = np.loadtxt(os.path.join("..", "output", "neutral_specific_difference.csv"), delimiter=',')
+    y_ax = np.loadtxt(os.path.join("..", "output", f"{model_alias}_neutrality.csv"), delimiter=',')
 
     # choose only words that are in the embeddings
     wordlist = [w for w in wordlist_full if w in embedding.vocab]
@@ -76,4 +76,4 @@ def plot_words(embedding, model_name, wordlist_full):
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
     plt.axvline(color= 'grey')
     plt.axhline(color= 'grey')
-    plt.savefig(os.path.join("..", "output", f"{model_name}_gender_plot.png"))
+    plt.savefig(os.path.join("..", "output", f"{model_alias}_gender_plot.png"))

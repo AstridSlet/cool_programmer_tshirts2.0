@@ -14,7 +14,7 @@ plt.style.use("seaborn")
 
 
 
-def plot_words(embedding, model_name, model_title, wordlist_input):
+def plot_words3(embedding, model_name, model_title, wordlist_input):
 
     # load x-axis
     x_ax = ['mand', 'kvinde'] #np.loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')

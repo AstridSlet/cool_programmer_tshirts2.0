@@ -1,6 +1,7 @@
 from utility_functions import weat_func
 from print_similarities import print_similarities
-from viz3 import plot_words
+from viz2 import plot_words2
+from viz3 import plot_words3
 from gensim.models.keyedvectors import KeyedVectors
 from danlp.models.embeddings import load_wv_with_gensim
 import argparse
@@ -28,16 +29,8 @@ if __name__ == "__main__":
         model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", args.embedding_filename), binary=True)
      
     print("loading debiased model")
-    #if args.debiased_filename.endswith(".wv"):
-    #    #fixed thje path
-    #    debiased_model = load_wv_with_gensim(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"))
-    #else:
     debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"), binary=True)
      
-    
-    #
-    # debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"), binary=True)
-    
     # define attribute words
     male = ['mandlig', 'mand','dreng','bror','han','ham','hans','søn']
     female = ['kvindelig', 'kvinde', 'pige', 'søster', 'hun', 'hende', 'hendes', 'datter'] 
@@ -83,8 +76,11 @@ if __name__ == "__main__":
     #print_similarities(args.debiased_filename, combined)
     
     # plot words
-    plot_words(model, f"biased_{args.model_alias}", "Career-family", combined)
-    plot_words(debiased_model, f"debiased_{args.model_alias}", "Career-family", combined)
+    plot_words2(model, f"biased_{args.model_alias}_2", "Career-family", combined)
+    plot_words2(debiased_model, f"debiased_{args.model_alias}_2", "Career-family", combined)
+
+    plot_words3(model, f"biased_{args.model_alias}_3", "Career-family", combined)
+    plot_words3(debiased_model, f"debiased_{args.model_alias}_3", "Career-family", combined)
 
     '''
     #hjemmelavet

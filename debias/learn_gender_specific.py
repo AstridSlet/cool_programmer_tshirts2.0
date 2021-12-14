@@ -21,8 +21,7 @@ if sys.version_info[0] < 3:
 if __name__ == "__main__":
     # define args
     parser = argparse.ArgumentParser()
-    parser.add_argument("--embedding_filename", type=str, default="DAGW-model(1).bin", help="Filename embedding")
-    parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
+    parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding. Choose from daNLP: 'conll17.da.wv', 'wiki.da.wv', 'cc.da.wv'")    parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
     parser.add_argument("--gender_specific_seed_words", type=str, default="da_gender_specific_seed.json", help="Filename gender specific seed")
     #this could be assigned to each embedding - for new we are overwriting
     parser.add_argument("--outfile", type=str, default = "da_gender_specific_full.json", help="Filename gender specific full")
