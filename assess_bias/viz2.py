@@ -10,7 +10,7 @@ if sys.version_info[0] < 3:
     import io
     open = io.open
 plt.style.use("seaborn")
-
+ 
 
 def plot_words(embedding, model_name, wordlist_full):
 
