@@ -40,8 +40,8 @@ if __name__ == "__main__":
     family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
 
     #print("getting WEAT scores")
-    # get WEAT scores model
-    #weat_func(model, f"biased_{args.model_type}", "career", "family", 10000, male, female, career, family)
+    get WEAT scores model
+    weat_func(model, f"biased_{args.model_type}", "career", "family", 10000, male, female, career, family)
     #weat_func(model, f"biased_{args.model_type}", "science", "arts", 10000, male, female, science, arts)
     #weat_func(model, f"biased_{args.model_type}", "math", "arts", 10000, male, female, math, arts)
 
