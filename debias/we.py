@@ -249,13 +249,13 @@ def doPCA(pairs, embedding, num_components = 0.95):
     pca.fit(matrix)
     return pca
 
-def plotPCA(pca, n_components=0.95):
+def plotPCA(pca, model_type, n_components):
     plt.bar(range(pca.n_components_), pca.explained_variance_ratio_, color = "seagreen")
-    plt.title("Explained variance by PCA components")
+    plt.title(f"Explained variance by PCA components - model: {model_type}")
     plt.xlabel("PCA components")
     plt.ylabel("Explained variance")
     print ("PCA plot saved to output folder")
-    plt.savefig(os.path.join("..", "output", "pca_plot.png"))
+    plt.savefig(os.path.join("..", "output", f"{model_type}_pca_plot.png"))
     
 def drop(u, v):
     return u - v * u.dot(v) / v.dot(v)

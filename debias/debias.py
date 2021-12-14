@@ -18,12 +18,12 @@ Tolga Bolukbasi, Kai-Wei Chang, James Zou, Venkatesh Saligrama, and Adam Kalai
 """
 
 
-def debias(E, gender_specific_words, definitional, equalize):
+def debias(E, gender_specific_words, definitional, equalize, model_type):
     # do PCA analysis
     pca = we.doPCA(definitional, E, num_components=10)
     
     # plot PCA
-    we.plotPCA(pca, n_components=0.95)
+    we.plotPCA(pca, model_type, n_components=0.95)
 
     # get gender direction as csv file
     gender_direction = pca.components_[0]
@@ -56,6 +56,7 @@ if __name__ == "__main__":
     parser.add_argument("--gendered_words_filename", default = "da_gender_specific_full.json",help="File containing words not to neutralize (one per line)")
     parser.add_argument("--equalize_filename", default = "da_equalize_pairs.json", help="Word pairs for equalizing")
     parser.add_argument("--debiased_filename", default = "debiased_model.bin", help="???.bin")
+    parser.add_argument("--model_type", default = "word2vec", help="Model type e.g. word2vec, fasttext etc.")
 
     # parse args
     args = parser.parse_args()
@@ -67,6 +68,7 @@ if __name__ == "__main__":
     gendered_words_filename = os.path.join("..","data", args.gendered_words_filename)
     equalize_filename = os.path.join("..","data", args.equalize_filename)
     debiased_filename = os.path.join("..","embeddings", args.debiased_filename)
+    model_type = args.model_type
 
 
     with open(definitional_filename, "r") as f:
@@ -85,7 +87,7 @@ if __name__ == "__main__":
     E = we.WordEmbedding(embedding_filename)
 
     print("Debiasing:", embedding_filename)
-    debias(E, gender_specific_words, defs, equalize_pairs)
+    debias(E, gender_specific_words, defs, equalize_pairs, model_type)
 
     print("Saving to file...")
     if embedding_filename[-4:] == debiased_filename[-4:] == ".bin":
