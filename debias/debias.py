@@ -51,26 +51,28 @@ def debias(E, gender_specific_words, definitional, equalize, model_type):
 if __name__ == "__main__":
     # define args
     parser = argparse.ArgumentParser()
-    parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding")
+    parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding. Choose from daNLP: 'conll17.da.wv', 'wiki.da.wv', 'cc.da.wv'")
     parser.add_argument("--definitional_filename", default = "da_definitional_pairs.json", help="Definitional pairs for creating gender direction")
     parser.add_argument("--gendered_words_filename", default = "da_gender_specific_full.json",help="File containing words not to neutralize (one per line)")
     parser.add_argument("--equalize_filename", default = "da_equalize_pairs.json", help="Word pairs for equalizing")
     parser.add_argument("--debiased_filename", default = "debiased_model.bin", help="???.bin")
-    parser.add_argument("--model_type", default = "word2vec", help="Model type e.g. word2vec, fasttext etc.")
+    parser.add_argument("--model_alias", default = "dagw_word2vec", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
 
     # parse args
     args = parser.parse_args()
 
     # retrieve args
-    embedding_filename = os.path.join("..","embeddings", args.embedding_filename)
+    if args.embedding_filename.endswith(".wv"):
+        embedding_filename = args.embedding_filename
+    else:
+        embedding_filename = os.path.join("..","embeddings", args.embedding_filename)
     definitional_filename = os.path.join("..","data", args.definitional_filename)
     print(definitional_filename)
     gendered_words_filename = os.path.join("..","data", args.gendered_words_filename)
     equalize_filename = os.path.join("..","data", args.equalize_filename)
-    debiased_filename = os.path.join("..","embeddings", f"{model_type}_{args.debiased_filename}")
-    model_type = args.model_type
-
-
+    model_alias = args.model_alias
+    debiased_filename = os.path.join("..","embeddings", f"{model_alias}_{args.debiased_filename}")
+    
     with open(definitional_filename, "r") as f:
         defs = json.load(f)
     print("definitional", defs)
@@ -87,7 +89,7 @@ if __name__ == "__main__":
     E = we.WordEmbedding(embedding_filename)
 
     print("Debiasing:", embedding_filename)
-    debias(E, gender_specific_words, defs, equalize_pairs, model_type)
+    debias(E, gender_specific_words, defs, equalize_pairs, model_alias)
 
     print("Saving to file...")
     if embedding_filename[-4:] == debiased_filename[-4:] == ".bin":
