@@ -28,7 +28,15 @@ if __name__ == "__main__":
         model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", args.embedding_filename), binary=True)
      
     print("loading debiased model")
+    #if args.debiased_filename.endswith(".wv"):
+    #    #fixed thje path
+    #    debiased_model = load_wv_with_gensim(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"))
+    #else:
     debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"), binary=True)
+     
+    
+    #
+    # debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"), binary=True)
     
     # define attribute words
     male = ['mandlig', 'mand','dreng','bror','han','ham','hans','søn']
@@ -71,8 +79,8 @@ if __name__ == "__main__":
     combined = career+family
 
     # get similarity scores: professions projected onto gender direction
-    print_similarities(args.embedding_filename, combined)
-    print_similarities(args.debiased_filename, combined)
+    #print_similarities(args.embedding_filename, combined)
+    #print_similarities(args.debiased_filename, combined)
     
     # plot words
     plot_words(model, f"biased_{args.model_alias}", "Career-family", combined)

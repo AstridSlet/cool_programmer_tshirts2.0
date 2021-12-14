@@ -94,7 +94,8 @@ if __name__ == "__main__":
     print("Saving to file...")
     if embedding_filename[-4:] == debiased_filename[-4:] == ".bin":
         E.save_w2v(debiased_filename)
+        print("I saved with save_w2v-function")
     else:
-        E.save(debiased_filename)
-
+        E.save_w2v(debiased_filename)
+        print("I saved here with save-function") #where wv files save at least
     print("\n\nDone!\n")
