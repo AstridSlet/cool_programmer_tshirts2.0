@@ -73,7 +73,7 @@ if __name__ == "__main__":
     
     # plot words
     plot_words(model, f"biased_{args.model_type}", "Career-family", combined)
-    plot_words(debiased_model, f"debiased_{args.model_type}", "Career-family", model_title, combined)
+    plot_words(debiased_model, f"debiased_{args.model_type}", "Career-family", combined)
 
     '''
     #hjemmelavet

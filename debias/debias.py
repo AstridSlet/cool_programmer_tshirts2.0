@@ -87,7 +87,6 @@ if __name__ == "__main__":
     print("Debiasing:", embedding_filename)
     debias(E, gender_specific_words, defs, equalize_pairs)
 
-'''
     print("Saving to file...")
     if embedding_filename[-4:] == debiased_filename[-4:] == ".bin":
         E.save_w2v(debiased_filename)
@@ -95,4 +94,4 @@ if __name__ == "__main__":
         E.save(debiased_filename)
 
     print("\n\nDone!\n")
-'''
+
