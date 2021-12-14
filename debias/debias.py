@@ -19,15 +19,18 @@ Tolga Bolukbasi, Kai-Wei Chang, James Zou, Venkatesh Saligrama, and Adam Kalai
 """
 
 
-def debias(E, gender_specific_words, definitional, equalize, model_type):
+def debias(E, gender_specific_words, definitional, equalize, model_alias):
     # do PCA analysis
     pca = we.doPCA(definitional, E, num_components=10)
     
     # plot PCA
-    we.plotPCA(pca, model_type, n_components=0.95)
+    we.plotPCA(pca, model_alias, n_components=0.95)
 
     # get gender direction as csv file
     gender_direction = pca.components_[0]
+
+    #save gender subspace
+    np.savetxt(os.path.join("..", f"{model_alias}_gender_subspace.csv"= gender_direction, delimiter=','))
 
     specific_set = set(gender_specific_words)
     for i, w in enumerate(E.words):
