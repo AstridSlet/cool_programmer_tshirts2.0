@@ -6,7 +6,7 @@ import numpy as np
 import scipy.sparse
 import matplotlib.pyplot as plt
 plt.style.use("seaborn")
-#from danlp.models.embeddings import load_wv_with_gensim
+from danlp.models.embeddings import load_wv_with_gensim
 from sklearn.decomposition import PCA
 if sys.version_info[0] < 3:
     import io
@@ -59,8 +59,10 @@ class WordEmbedding:
             model =gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
-        #elif fname.endswith(".wv"):
-            #model = load_wv_with_gensim(fname)
+        elif fname.endswith(".wv"):
+            model = load_wv_with_gensim(fname)
+            words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
+            vecs = [model[w] for w in words]
         else:
             vecs = []
             words = []
@@ -249,13 +251,13 @@ def doPCA(pairs, embedding, num_components = 0.95):
     pca.fit(matrix)
     return pca
 
-def plotPCA(pca, model_type, n_components):
+def plotPCA(pca, model_alias, n_components):
     plt.bar(range(pca.n_components_), pca.explained_variance_ratio_, color = "seagreen")
-    plt.title(f"Explained variance by PCA components - model: {model_type}")
+    plt.title(f"Explained variance by PCA components - model: {model_alias}")
     plt.xlabel("PCA components")
     plt.ylabel("Explained variance")
     print ("PCA plot saved to output folder")
-    plt.savefig(os.path.join("..", "output", f"{model_type}_pca_plot.png"))
+    plt.savefig(os.path.join("..", "output", f"{model_alias}_pca_plot.png"))
     
 def drop(u, v):
     return u - v * u.dot(v) / v.dot(v)
