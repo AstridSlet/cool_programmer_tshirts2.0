@@ -4,9 +4,11 @@ import os, sys
 sys.path.append("..")
 import numpy as np
 import scipy.sparse
+import danlp
+#from danlp.models.embeddings import load_wv_with_gensim
 import matplotlib.pyplot as plt
 plt.style.use("seaborn")
-from danlp.models.embeddings import load_wv_with_gensim
+#from danlp.models.embeddings import load_wv_with_gensim
 from sklearn.decomposition import PCA
 if sys.version_info[0] < 3:
     import io
@@ -14,6 +16,8 @@ if sys.version_info[0] < 3:
 else:
     unicode = str
 
+from gensim.models import FastText
+model = FastText.load("/work/Exam/cool_programmer_tshirts2.0/embeddings/FT.model")
 
 
 class WordEmbedding:
@@ -23,14 +27,22 @@ class WordEmbedding:
         self.desc = fname
         print("*** Reading data from " + fname)
         if fname.endswith(".bin"):
-            import gensim.models
-            model =gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
+            from gensim.models import KeyedVectors
+            model = KeyedVectors.load_word2vec_format(fname, binary=True)
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
-        elif fname.endswith(".wv"):
-            model = load_wv_with_gensim(fname)
-            words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
+        #elif fname.endswith(".wv"):
+            #model = load_wv_with_gensim(fname)
+            #words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
+            #vecs = [model[w] for w in words]
+        elif fname.endswith(".model"):
+            from gensim.models import FastText
+            model = FastText.load(fname)
+            print("loading words")
+            words = sorted([w for w in model.wv], key=lambda w: model.wv[w].index)
+            print(words[:5])
             vecs = [model[w] for w in words]
+            print(vecs[:5])
         else:
             vecs = []
             words = []
@@ -172,7 +184,25 @@ class WordEmbedding:
 
         return ans
 
-E = WordEmbedding('conll17.da.wv')
-E.more_words_like_these('mand')
+def doPCA(pairs, embedding, num_components = 0.95):
+    matrix = []
+    for a, b in pairs:
+        center = (embedding.v(a) + embedding.v(b))/2
+        matrix.append(embedding.v(a) - center)
+        matrix.append(embedding.v(b) - center)
+    matrix = np.array(matrix)
+    pca = PCA(n_components = num_components)
+    pca.fit(matrix)
+    return pca
 
+def plotPCA(pca, model_type, n_components):
+    plt.bar(range(pca.n_components_), pca.explained_variance_ratio_, color = "seagreen")
+    plt.title(f"Explained variance by PCA components - model: {model_type}")
+    plt.xlabel("PCA components")
+    plt.ylabel("Explained variance")
+    print ("PCA plot saved to output folder")
+    plt.savefig(os.path.join("..", "output", f"{model_type}_pca_plot.png"))
 
+    
+def drop(u, v):
+    return u - v * u.dot(v) / v.dot(v)

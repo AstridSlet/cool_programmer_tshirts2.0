@@ -15,6 +15,8 @@ def print_similarities(embedding, words_list):
     #gender_direction = loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
 
     gender_direction =  E.v("kvinde") - E.v("mand")
+    print("These are the values in kvinde-mand")
+    print(gender_direction)
 
     # project professions onto gender dimesion
     sp = sorted([(E.v(w).dot(gender_direction), w) for w in words_list])
