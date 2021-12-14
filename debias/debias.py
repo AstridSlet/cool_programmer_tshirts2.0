@@ -67,7 +67,7 @@ if __name__ == "__main__":
     print(definitional_filename)
     gendered_words_filename = os.path.join("..","data", args.gendered_words_filename)
     equalize_filename = os.path.join("..","data", args.equalize_filename)
-    debiased_filename = os.path.join("..","embeddings", args.debiased_filename)
+    debiased_filename = os.path.join("..","embeddings", f"{model_type}_{args.debiased_filename}")
     model_type = args.model_type
 
 
@@ -96,4 +96,3 @@ if __name__ == "__main__":
         E.save(debiased_filename)
 
     print("\n\nDone!\n")
-
