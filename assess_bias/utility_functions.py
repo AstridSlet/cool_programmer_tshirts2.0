@@ -133,9 +133,9 @@ def results_weat(X, Y, A, B, embedding, p):
     pvalue = weat_p_value(X, Y, A, B, embedding, p)[3]
     
     #Combine all values in dataframe
-    s1=pd.Series(diff_association, 2,name='diff_association')
-    s2=pd.Series(effect_size, 2,name='effect_size')
-    s3=pd.Series(pvalue, 2,name='pvalue')
+    s1=pd.Series(diff_association,name='diff_association')
+    s2=pd.Series(effect_size,name='effect_size')
+    s3=pd.Series(pvalue,name='pvalue')
 
     results = pd.concat([s1,s2,s3], axis=1)
         
