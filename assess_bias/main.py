@@ -44,14 +44,14 @@ if __name__ == "__main__":
     
     #print("getting WEAT scores")
     #get WEAT scores model
-    weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    weat_func(model, f"biased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
-    weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    #weat_func(model, f"biased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
+    #weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
     
     # load professions
     #professions_path = os.path.join("..", "data", "da_professions.json")
@@ -76,11 +76,11 @@ if __name__ == "__main__":
     #print_similarities(args.debiased_filename, combined)
     
     # plot words
-    plot_words2(model, f"biased_{args.model_alias}_2", combined)
-    plot_words2(debiased_model, f"debiased_{args.model_alias}_2", combined)
+    plot_words2(model, args.model_alias, combined, "carrer-family", "orig")
+    plot_words2(debiased_model, args.model_alias, combined, "carrer-family", "debiased")
 
-    plot_words3(model, f"biased_{args.model_alias}_3", combined)
-    plot_words3(debiased_model, f"debiased_{args.model_alias}_3", combined)
+    plot_words3(model, args.model_alias, combined, "carrer-family", "orig")
+    plot_words3(debiased_model, args.model_alias, combined, "carrer-family", "debiased")
 
     '''
     #hjemmelavet

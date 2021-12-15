@@ -12,9 +12,7 @@ if sys.version_info[0] < 3:
 plt.style.use("seaborn")
  
 
-
-
-def plot_words3(embedding, model_name, model_title, wordlist_input):
+def plot_words3(embedding, model_alias, wordlist_input, bias_type, biased):
 
     # load x-axis
     x_ax = ['mand', 'kvinde'] #np.loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
@@ -35,7 +33,7 @@ def plot_words3(embedding, model_name, model_title, wordlist_input):
     x = (vectors[1]-vectors[0])
     
     # flipped
-    y = (vectors[3]-vectors[2])
+    y = np.flipud(vectors[3]-vectors[2])
 
     # normalize
     #x /= np.linalg.norm(x)
@@ -57,7 +55,7 @@ def plot_words3(embedding, model_name, model_title, wordlist_input):
     #PLOT
     plt.figure(figsize=(12,7))
     
-    plt.title(label=model_title,
+    plt.title(label=bias_type,
             fontsize=30,
             color="black")
     plt.xlim([-0.75, 0.75])
@@ -81,7 +79,7 @@ def plot_words3(embedding, model_name, model_title, wordlist_input):
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
     plt.axvline(color= 'grey')
     plt.axhline(color= 'grey')
-    plt.savefig(os.path.join("..", "output", f"{model_name}_gender_plot.png"))
+    plt.savefig(os.path.join("..", "output", f"{biased}{model_alias}_3gender_plot.png"))
 
 
 

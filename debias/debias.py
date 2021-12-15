@@ -30,7 +30,7 @@ def debias(E, gender_specific_words, definitional, equalize, model_alias):
     gender_direction = pca.components_[0]
 
     #save gender subspace
-    np.savetxt(os.path.join("..", f"{model_alias}_gender_subspace.csv"), gender_direction, delimiter=',')
+    np.savetxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), gender_direction, delimiter=',')
 
     specific_set = set(gender_specific_words)
     for i, w in enumerate(E.words):
