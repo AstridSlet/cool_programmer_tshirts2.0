@@ -32,11 +32,14 @@ def debias(E, gender_specific_words, definitional, equalize, model_alias):
     #save gender subspace
     np.savetxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), gender_direction, delimiter=',')
 
+    # neutralize
     specific_set = set(gender_specific_words)
     for i, w in enumerate(E.words):
         if w not in specific_set:
             E.vecs[i] = we.drop(E.vecs[i], gender_direction)
     E.normalize()
+
+    # equalize
     candidates = {x for e1, e2 in equalize for x in [(e1.lower(), e2.lower()),
                                                      (e1.title(), e2.title()),
                                                      (e1.upper(), e2.upper())]}

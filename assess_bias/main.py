@@ -1,7 +1,7 @@
 from utility_functions import weat_func
 from print_similarities import print_similarities
 from viz2 import plot_words2
-from viz3 import plot_words3
+from viz3 import restrict_wv, tsne_plot
 from gensim.models.keyedvectors import KeyedVectors
 from danlp.models.embeddings import load_wv_with_gensim
 import argparse
@@ -79,3 +79,14 @@ if __name__ == "__main__":
 
     plot_words2(model, args.model_alias, profession_sample, gender_specific_sample, "Original Professions", "orig")
     plot_words2(debiased_model, args.model_alias, profession_sample, gender_specific_sample, "Debiased Professions", "debiased")
+
+     # define wordlist for t-sne
+    tsne_words = set(male+female+arts+math+family+career)
+
+    # test embedding is loaded
+    model.most_similar("kvinde")
+    
+    # restrict embedding
+    restrict_wv(model, tsne_words)
+
+    tsne_plot(model, args.model_alias)
