@@ -4,6 +4,7 @@ import os, sys
 sys.path.append("..")
 import numpy as np
 import scipy.sparse
+import pickle
 import matplotlib.pyplot as plt
 plt.style.use("seaborn")
 from danlp.models.embeddings import load_wv_with_gensim
@@ -61,12 +62,6 @@ class WordEmbedding:
             vecs = [model[w] for w in words]
         elif fname.endswith(".wv"):
             model = load_wv_with_gensim(fname)
-            words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
-            vecs = [model[w] for w in words]
-        elif fname.endswith(".txt"):
-            from gensim.models.keyedvectors import KeyedVectors
-            model = KeyedVectors.load_word2vec_format(fname, binary=False)
-            print("loaded model!")
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
         else:

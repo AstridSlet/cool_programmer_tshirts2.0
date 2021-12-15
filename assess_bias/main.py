@@ -1,6 +1,6 @@
 from utility_functions import weat_func
 from print_similarities import print_similarities
-from viz2 import plot_words2
+#from viz2 import plot_words2
 from viz3 import restrict_wv, tsne_plot
 from gensim.models.keyedvectors import KeyedVectors
 from danlp.models.embeddings import load_wv_with_gensim
@@ -43,13 +43,13 @@ if __name__ == "__main__":
     
     #print("getting WEAT scores")
 
-    #get WEAT scores model
-    #weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    #weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    # get WEAT scores model
+    weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    #weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    #weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
     
     # load professions
     professions_path = os.path.join("..", "data", "da_professions.json")
@@ -77,10 +77,7 @@ if __name__ == "__main__":
     #plot_words2(model, args.model_alias, combined, "Original Professions", "orig")
     #plot_words2(debiased_model, args.model_alias, combined, "Debiased Professions", "debiased")
 
-    plot_words2(model, args.model_alias, profession_sample, gender_specific_sample, "Original Professions", "orig")
-    plot_words2(debiased_model, args.model_alias, profession_sample, gender_specific_sample, "Debiased Professions", "debiased")
-
-     # define wordlist for t-sne
+    # define wordlist for t-sne
     tsne_words = set(male+female+arts+math+family+career)
 
     # test embedding is loaded

@@ -58,6 +58,9 @@ def tsne_plot(model, model_alias):
         
     plt.figure(figsize=(12, 12), dpi=600) 
     for i in range(len(x)):
+        plt.title(label=f"TSNE plot: {model_alias}",
+            fontsize=30,
+            color="black")
         plt.scatter(x[i],y[i])
         plt.annotate(labels[i],
                      xy=(x[i], y[i]),
