@@ -20,3 +20,10 @@ python learn_gender_specific.py --embedding_filename 'conll17.da.wv' --model_ali
 ```
 python debias.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiased_model.bin' --model_alias 'conll17da'
 ```
+
+##### Assess the original embedding and its debiased version:
+```
+python main.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiased_model.bin' --model_alias 'conll17da'
+```
+
+
