@@ -63,10 +63,12 @@ def plot_words2(embedding, model_alias, professions, gender_specific, bias_type,
             color="black")
     plt.xlim([-0.8, 0.8])
     #plt.ylim([-0.25, 0.25])
-
+    plt.axvline(color= 'lightgrey')
+    plt.axhline(color= 'lightgrey')
+    
     #plot the wordlist
-    plt.scatter(Wp[0,int(len(x_ax)):int(len(professions))], Wp[1,int(len(x_ax)):int(len(professions))], color = 'orchid', marker= "o")
-    plt.scatter(Wp[0,int(len(professions)+int(len(x_ax))):int(len(professions+gender_specific)+int(len(x_ax)))], Wp[1,int(len(professions)+int(len(x_ax))):int(len(professions+gender_specific)+int(len(x_ax)))], color = 'mediumseagreen', marker= "o")
+    plt.scatter(Wp[0,int(len(x_ax)-1):int(len(professions))], Wp[1,int(len(x_ax)-1):int(len(professions))], color = 'orchid', marker= "o")
+    plt.scatter(Wp[0,int(len(professions)+int(len(x_ax)-1)):int(len(professions+gender_specific)+int(len(x_ax)-1))], Wp[1,int(len(professions)+int(len(x_ax)-1)):int(len(professions+gender_specific)+int(len(x_ax)-1))], color = 'mediumseagreen', marker= "o")
     plt.scatter(Wp[0,:int(len(x_ax))], Wp[1,:int(len(x_ax))], color = 'black', marker= "x")
 
     rX = max(Wp[0,:])-min(Wp[0,:])
@@ -79,6 +81,5 @@ def plot_words2(embedding, model_alias, professions, gender_specific, bias_type,
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize= 'xx-large', c = 'black')
         else:
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
-    plt.axvline(color= 'lightgrey')
-    plt.axhline(color= 'lightgrey')
+    
     plt.savefig(os.path.join("..", "output", f"{biased}_{model_alias}_2_gender_plot.png"))
