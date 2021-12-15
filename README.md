@@ -3,7 +3,7 @@ Code for assessing and removing bias in Danish wordembeddings.
 
 
 
-The method can be used on the following word embeddings:
+The method can be used on the following pre-trained word embeddings from [daNLP](https://github.com/alexandrainst/danlp):
 - 'conll17.da.wv'
 - 'wiki.da.wv'
 - 'cc.da.wv'
