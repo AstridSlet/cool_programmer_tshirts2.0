@@ -133,9 +133,9 @@ def results_weat(X, Y, A, B, embedding, p):
     pvalue = weat_p_value(X, Y, A, B, embedding, p)[3]
     
     #Combine all values in dataframe
-    s1=pd.Series(diff_association,name='diff_association')
-    s2=pd.Series(effect_size,name='effect_size')
-    s3=pd.Series(pvalue ,name='pvalue')
+    s1=pd.Series(diff_association, 2,name='diff_association')
+    s2=pd.Series(effect_size, 2,name='effect_size')
+    s3=pd.Series(pvalue, 2,name='pvalue')
 
     results = pd.concat([s1,s2,s3], axis=1)
         
@@ -164,20 +164,3 @@ def weat_func(wordembedding, model_name, theme1, theme2, permutations, male, fem
     results.to_csv(os.path.join("..", "output", name), index = True)
 
     return print(results)
-
-
-# choose only words that are in the embeddings
-def choose_biased(embedding, words_full):
-    # take only words that are in embedding
-    wordlist = [w for w in words_full if w in embedding.vocab]
-    
-    # load gender direction (from debias function)
-    gender_direction = np.loadtxt(os.path.join("..", "output","gender_direction.csv"), delimiter=',')
-
-    # project words onto gender dimesion
-    sp = sorted([(embedding.get_vector(w).dot(gender_direction), w) for w in wordlist])
-    male, female = sp[:20], sp[-20:]
-    
-
-    # print extreme words
-    return sp[:20], sp[-20:]
