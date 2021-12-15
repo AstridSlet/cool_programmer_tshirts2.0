@@ -36,22 +36,21 @@ if __name__ == "__main__":
     female = ['kvindelig', 'kvinde', 'pige', 'søster', 'hun', 'hende', 'hendes', 'datter'] 
 
     # define target words
-    science = ['videnskab', 'teknologi', 'fysik', 'kemi', 'computer', 'eksperiment', 'data', 'biologi'] 
+    #science = ['videnskab', 'teknologi', 'fysik', 'kemi', 'computer', 'eksperiment', 'data', 'biologi'] 
     arts = ['poesi', 'kunst', 'dans', 'litteratur', 'roman', 'symfoni', 'drama', 'skulptur'] 
-    math = ['matematik', 'algebra', 'geometri', 'regning', 'ligning', 'beregning', 'tal', 'addition'] 
-    career = ['leder', 'bestyrelse', 'professionel', 'virksomhed', 'løn', 'arbejde', 'forretning', 'karriere'] 
-    family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
+    math = ['matematik', 'algebra', 'geometri', 'calculus', 'ligning', 'udregning', 'tal', 'addition'] 
+    career = ['leder', 'ledelse', 'professionel', 'virksomhed', 'løn', 'kontor', 'forretning','karriere'] 
+    family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'slægtninge'] 
     
     #print("getting WEAT scores")
+
     #get WEAT scores model
-    #weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    #weat_func(model, f"biased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
-    #weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    #weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    #weat_func(debiased_model, f"debiased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
-    #weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
     
     # load professions
     #professions_path = os.path.join("..", "data", "da_professions.json")
@@ -68,6 +67,8 @@ if __name__ == "__main__":
     #gender_specific_sample = random.sample(gender_specific_words, 10)
     #combined = profession_sample + gender_specific_sample
 
+#MAKE A FOR LOOP
+
     # combine wordlist as input to plot and similiarity scores 
     combined = career+family
 
@@ -81,10 +82,3 @@ if __name__ == "__main__":
 
     plot_words3(model, args.model_alias, combined, "carrer-family", "orig")
     plot_words3(debiased_model, args.model_alias, combined, "carrer-family", "debiased")
-
-    '''
-    #hjemmelavet
-    Z = ['stærk', 'beslutsom', 'muskler', 'forsørger', 'helt', 'modig', 'kriger', 'stor'] #Target words for Career
-    W = ['svag','kærlig', 'diversitet', 'smuk','lille', 'underdanig', 'kreativ', 'hjemmegående'] #Target words for Family
-
-    '''
