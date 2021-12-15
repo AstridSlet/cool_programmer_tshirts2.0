@@ -21,20 +21,22 @@ if sys.version_info[0] < 3:
 if __name__ == "__main__":
     # define args
     parser = argparse.ArgumentParser()
-    parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding. Choose from daNLP: 'conll17.da.wv', 'wiki.da.wv', 'cc.da.wv'")    parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
+    parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding. Choose from daNLP: 'conll17.da.wv', 'wiki.da.wv', 'cc.da.wv'")    
+    parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
     parser.add_argument("--gender_specific_seed_words", type=str, default="da_gender_specific_seed.json", help="Filename gender specific seed")
-    #this could be assigned to each embedding - for new we are overwriting
     parser.add_argument("--outfile", type=str, default = "da_gender_specific_full.json", help="Filename gender specific full")
     parser.add_argument("--model_alias", default = "dagw_word2vec", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
 
     # parse arguments
     args = parser.parse_args()
 
-    # retrieve args
+    # load from embeddings folder or danlo 
     if args.embedding_filename.endswith(".wv"):
         embedding_filename = args.embedding_filename
     else:
         embedding_filename = os.path.join("..","embeddings", args.embedding_filename)
+    
+    # retrieve args 
     num_training = args.num_training
     gender_specific_seed_words = os.path.join("..", "data", args.gender_specific_seed_words)
     outfile = os.path.join("..", "data", args.outfile)

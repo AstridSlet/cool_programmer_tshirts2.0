@@ -63,6 +63,11 @@ class WordEmbedding:
             model = load_wv_with_gensim(fname)
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
+        elif fname.endswith(".txt"):
+            import gensim.models
+            model =gensim.models.KeyedVectors.load_word2vec_format(fname, binary=False)
+            words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
+            vecs = [model[w] for w in words]
         else:
             vecs = []
             words = []
@@ -261,3 +266,4 @@ def plotPCA(pca, model_alias, n_components):
     
 def drop(u, v):
     return u - v * u.dot(v) / v.dot(v)
+    
