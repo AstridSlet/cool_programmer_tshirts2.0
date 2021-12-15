@@ -20,8 +20,7 @@ if __name__ == "__main__":
 
     # parse args
     args = parser.parse_args()
-    #k_model_fasttext = KeyedVectors.load_word2vec_format('/work/dagw_wordembeddings/fasttext_model/fasttext.txt', binary=False)
-
+    
     print("loading model")
     if args.embedding_filename.endswith(".wv"):
         model = load_wv_with_gensim(args.embedding_filename)
@@ -45,40 +44,38 @@ if __name__ == "__main__":
     #print("getting WEAT scores")
 
     #get WEAT scores model
-    weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    #weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
     
     # load professions
-    #professions_path = os.path.join("..", "data", "da_professions.json")
-    #with open(professions_path, "r") as f:
-        #profession_words = json.load(f)
+    professions_path = os.path.join("..", "data", "da_professions.json")
+    with open(professions_path, "r") as f:
+        profession_words = json.load(f)
 
     # load gender specific words
-    #genderspecific_path = os.path.join("..", "data", "da_gender_specific_seed.json")
-    #with open(genderspecific_path, "r") as f:
-        #gender_specific_words = json.load(f)
+    genderspecific_path = os.path.join("..", "data", "da_gender_specific_seed.json")
+    with open(genderspecific_path, "r") as f:
+        gender_specific_words = json.load(f)
 
     # sample words 
-    #profession_sample = random.sample(profession_words, 10)
-    #gender_specific_sample = random.sample(gender_specific_words, 10)
-    #combined = profession_sample + gender_specific_sample
-
-#MAKE A FOR LOOP
+    profession_sample = random.sample(profession_words, 10)
+    gender_specific_sample = random.sample(gender_specific_words, 10)
+    combined = profession_sample + gender_specific_sample
 
     # combine wordlist as input to plot and similiarity scores 
-    combined = career+family
+    #combined = career+family
 
     # get similarity scores: professions projected onto gender direction
     #print_similarities(args.embedding_filename, combined)
     #print_similarities(args.debiased_filename, combined)
     
     # plot words
-    plot_words2(model, args.model_alias, combined, "carrer-family", "orig")
-    plot_words2(debiased_model, args.model_alias, combined, "carrer-family", "debiased")
+    #plot_words2(model, args.model_alias, combined, "Original Professions", "orig")
+    #plot_words2(debiased_model, args.model_alias, combined, "Debiased Professions", "debiased")
 
-    plot_words3(model, args.model_alias, combined, "carrer-family", "orig")
-    plot_words3(debiased_model, args.model_alias, combined, "carrer-family", "debiased")
+    plot_words2(model, args.model_alias, profession_sample, gender_specific_sample, "Original Professions", "orig")
+    plot_words2(debiased_model, args.model_alias, profession_sample, gender_specific_sample, "Debiased Professions", "debiased")

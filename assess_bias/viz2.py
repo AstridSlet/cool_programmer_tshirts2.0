@@ -12,7 +12,7 @@ if sys.version_info[0] < 3:
 plt.style.use("seaborn")
  
 
-def plot_words2(embedding, model_alias, wordlist_full, bias_type, biased):
+def plot_words2(embedding, model_alias, professions, gender_specific, bias_type, biased):
 
     # load x-axis
     x = np.loadtxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), delimiter=',')
@@ -20,9 +20,12 @@ def plot_words2(embedding, model_alias, wordlist_full, bias_type, biased):
     # load vector for y-axis
     y_ax = np.loadtxt(os.path.join("..", "output", f"{model_alias}_neutrality.csv"), delimiter=',')
 
+    #combine
+    wordlist = professions+gender_specific
+    
     # choose only words that are in the embeddings
-    wordlist = [w for w in wordlist_full if w in embedding.vocab]
-
+    wordlist = [w for w in wordlist if w in embedding.vocab]
+    
     # retrieve vectors
     vectors = [embedding[k] for k in wordlist]
 
@@ -47,25 +50,29 @@ def plot_words2(embedding, model_alias, wordlist_full, bias_type, biased):
     
     #Wp skal normalizes - virker ikke endnu
     
-    Wp = Wp/np.linalg.norm(Wp)#xis=0)
+    #Wp = Wp/np.linalg.norm(Wp)#xis=0)
     #Wp = Wp/np.linalg.norm(Wp)
+    
     #PLOT
     plt.figure(figsize=(12,7))
     
     plt.title(label=bias_type,
             fontsize=30,
             color="black")
-    plt.xlim([-0.75, 0.75])
+    plt.xlim([-0.5, 2])
     #plt.ylim([-0.25, 0.25])
 
-    
     #plot the wordlist
-    plt.scatter(Wp[0,2:], Wp[1,2:], color = 'green', marker= "x")
+    
+    plt.scatter(Wp[0,int(len(wordlist)/2):], Wp[1,int(len(wordlist)/2):], color = 'orchid', marker= "o")
+    plt.scatter(Wp[0,:int(len(wordlist)/2)], Wp[1,:int(len(wordlist)/2)], color = 'mediumseagreen', marker= "o")
+    
+    #plt.scatter(Wp[0,2:], Wp[1,2:], color = 'green', marker= "x")
     #plot kvinde and mand
     #plt.scatter(Wp[0,:2], Wp[1,:2], color = 'red', marker= "o", label = "axis of interest")
 
     rX = max(Wp[0,:])-min(Wp[0,:])
-    rX = max(Wp[0,:])-min(Wp[0,:])
+    #rX = max(Wp[0,:])-min(Wp[0,:])
     rY = max(Wp[1,:])-min(Wp[1,:])
     eps = 0.005
     
@@ -74,6 +81,6 @@ def plot_words2(embedding, model_alias, wordlist_full, bias_type, biased):
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize= 'xx-large', c = 'red')
         else:
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
-    plt.axvline(color= 'grey')
-    plt.axhline(color= 'grey')
+    plt.axvline(color= 'lightgrey')
+    plt.axhline(color= 'lightgrey')
     plt.savefig(os.path.join("..", "output", f"{biased}_{model_alias}_2_gender_plot.png"))
