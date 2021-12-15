@@ -55,8 +55,8 @@ class WordEmbedding:
         self.desc = fname
         print("*** Reading data from " + fname)
         if fname.endswith(".bin"):
-            import gensim.models
-            model =gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
+            from gensim.models import KeyedVectors
+            model = KeyedVectors.load_word2vec_format(fname, binary=True)
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
         elif fname.endswith(".wv"):
@@ -64,8 +64,9 @@ class WordEmbedding:
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
         elif fname.endswith(".txt"):
-            import gensim.models
-            model =gensim.models.KeyedVectors.load_word2vec_format(fname, binary=False)
+            from gensim.models.keyedvectors import KeyedVectors
+            model = KeyedVectors.load_word2vec_format(fname, binary=False)
+            print("loaded model!")
             words = sorted([w for w in model.vocab], key=lambda w: model.vocab[w].index)
             vecs = [model[w] for w in words]
         else:
