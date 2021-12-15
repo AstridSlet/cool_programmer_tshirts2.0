@@ -10,8 +10,67 @@ if sys.version_info[0] < 3:
     import io
     open = io.open
 plt.style.use("seaborn")
- 
+from sklearn.manifold import TSNE
 
+
+def restrict_wv(wv, restricted_word_set):
+    new_vectors = []
+    new_vocab = {}
+    new_index2entity = []
+    new_vectors_norm = []
+
+    for i in range(len(wv.vocab)):
+        word = wv.index2entity[i]
+        vec = wv.vectors[i]
+        vocab = wv.vocab[word]
+        vec_norm = wv.vectors_norm[i]
+        if word in restricted_word_set:
+            vocab.index = len(new_index2entity)
+            new_index2entity.append(word)
+            new_vocab[word] = vocab
+            new_vectors.append(vec)
+            new_vectors_norm.append(vec_norm)
+
+    wv.vocab = new_vocab
+    wv.vectors = np.array(new_vectors)
+    wv.index2entity = np.array(new_index2entity)
+    wv.index2word = np.array(new_index2entity)
+    wv.vectors_norm = np.array(new_vectors_norm)
+
+ 
+def tsne_plot(model, model_alias):
+    "Creates and TSNE model and plots it"
+    labels = []
+    tokens = []
+
+    for word in model.wv.vocab:
+        tokens.append(model[word])
+        labels.append(word)
+    
+    tsne_model = TSNE(n_components=2, perplexity =10)
+    new_values = tsne_model.fit_transform(tokens)
+
+    x = []
+    y = []
+    for value in new_values:
+        x.append(value[0])
+        y.append(value[1])
+        
+    plt.figure(figsize=(12, 12), dpi=600) 
+    for i in range(len(x)):
+        plt.scatter(x[i],y[i])
+        plt.annotate(labels[i],
+                     xy=(x[i], y[i]),
+                     xytext=(5, 2),
+                     textcoords='offset points',
+                     ha='right',
+                     va='bottom')
+    plt.savefig(os.path.join("..", "output", f"tsne_plot{model_alias}.png"))
+    plt.show()
+
+
+
+'''
 def plot_words3(embedding, model_alias, wordlist_input, bias_type, biased):
 
     # load x-axis
@@ -84,7 +143,7 @@ def plot_words3(embedding, model_alias, wordlist_input, bias_type, biased):
 
 
 
-'''
+
 model_name = "test"
 model = KeyedVectors.load_word2vec_format('/work/Exam/cool_programmer_tshirts2.0/embeddings/DAGW-model(1).bin', binary=True) 
 
