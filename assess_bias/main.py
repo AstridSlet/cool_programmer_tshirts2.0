@@ -41,7 +41,7 @@ if __name__ == "__main__":
     math = ['matematik', 'algebra', 'geometri', 'regning', 'ligning', 'beregning', 'tal', 'addition'] 
     career = ['leder', 'bestyrelse', 'professionel', 'virksomhed', 'løn', 'arbejde', 'forretning', 'karriere'] 
     family = ['hjem','forældre', 'børn', 'familie','bedsteforældre', 'ægteskab', 'bryllup', 'pårørende'] 
-    '''
+    
     #print("getting WEAT scores")
     #get WEAT scores model
     weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
     weat_func(debiased_model, f"debiased_{args.model_alias}", "science", "arts", 10000, male, female, science, arts)
     weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
-    '''
+    
     # load professions
     #professions_path = os.path.join("..", "data", "da_professions.json")
     #with open(professions_path, "r") as f:
@@ -76,11 +76,11 @@ if __name__ == "__main__":
     #print_similarities(args.debiased_filename, combined)
     
     # plot words
-    plot_words2(model, f"biased_{args.model_alias}_2", "Career-family", combined)
-    plot_words2(debiased_model, f"debiased_{args.model_alias}_2", "Career-family", combined)
+    plot_words2(model, f"biased_{args.model_alias}_2", combined)
+    plot_words2(debiased_model, f"debiased_{args.model_alias}_2", combined)
 
-    plot_words3(model, f"biased_{args.model_alias}_3", "Career-family", combined)
-    plot_words3(debiased_model, f"debiased_{args.model_alias}_3", "Career-family", combined)
+    plot_words3(model, f"biased_{args.model_alias}_3", combined)
+    plot_words3(debiased_model, f"debiased_{args.model_alias}_3", combined)
 
     '''
     #hjemmelavet
