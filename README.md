@@ -1,4 +1,4 @@
-![cool](cool.png, width="150" height="280")
+![cool]("cool.png", width="150", height="280")
 # cool_programmer_tshirts2.0
 Code for assessing and removing bias in Danish wordembeddings. 
 
