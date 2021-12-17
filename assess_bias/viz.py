@@ -131,7 +131,7 @@ def tsne_plot(model, model_alias):
         
     plt.figure(figsize=(12, 12), dpi=600) 
     for i in range(len(x)):
-        plt.title(label=f"TSNE plot: {model_alias}",
+        plt.title(label=f"t-SNE plot: {model_alias}",
             fontsize=30,
             color="black")
         plt.scatter(x[i],y[i])
@@ -139,8 +139,9 @@ def tsne_plot(model, model_alias):
                      xy=(x[i], y[i]),
                      xytext=(5, 2),
                      textcoords='offset points',
+                     fontsize = 14,
                      ha='right',
                      va='bottom')
-    plt.savefig(os.path.join("..", "output", f"tsne_plot{model_alias}.png"))
+    plt.savefig(os.path.join("..", "output", f"tsne_plot_{model_alias}.png"))
     plt.show()
 

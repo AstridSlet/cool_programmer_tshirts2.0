@@ -11,7 +11,7 @@ if sys.version_info[0] < 3:
     open = io.open
 plt.style.use("seaborn")
 
-def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title, biased):
+def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, biased):
 
     # load x-axis
     y = np.loadtxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), delimiter=',')
@@ -40,7 +40,7 @@ def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title
     #PLOT
     plt.figure(figsize=(12,7))
     
-    plt.title(label=plot_title,
+    plt.title(label=f"Equalized Pairs projected on {gn_word[0]}",
             fontsize=30,
             color="black")
     #plt.xlim([-0.8, 0.8])
@@ -48,8 +48,8 @@ def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title
     plt.axvline(color= 'lightgrey')
     plt.axhline(color= 'lightgrey')
     
-    plt.xlabel("Projection of school")
-    plt.ylabel("Gender subspace")
+    plt.xlabel("Projection of school", fontsize=22)
+    plt.ylabel("Gender subspace", fontsize=22)
     
     #plot the wordlist
     plt.scatter(Wp[0,:1],Wp[1,:1], color = 'black', marker= "x", s = 200)

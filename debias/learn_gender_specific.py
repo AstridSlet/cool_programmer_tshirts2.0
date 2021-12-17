@@ -25,7 +25,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
     parser.add_argument("--gender_specific_seed_words", type=str, default="da_gender_specific_seed.json", help="Filename gender specific seed")
     parser.add_argument("--outfile", type=str, default = "da_gender_specific_full.json", help="Filename gender specific full")
-    parser.add_argument("--model_alias", default = "dagw_word2vec", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
+    parser.add_argument("--model_alias", default = "DAGW", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
 
     # parse arguments
     args = parser.parse_args()
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     # retrieve args 
     num_training = args.num_training
     gender_specific_seed_words = os.path.join("..", "data", args.gender_specific_seed_words)
-    outfile = os.path.join("..", "data", args.outfile)
+    outfile = os.path.join("..", "data", f"{args.model_alias}_{args.outfile}")
 
     # open seed words file
     with open(gender_specific_seed_words, "r") as f:

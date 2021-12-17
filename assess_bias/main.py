@@ -16,7 +16,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding. Choose from daNLP: 'conll17.da.wv', 'wiki.da.wv', 'cc.da.wv'")
     parser.add_argument("--debiased_filename", default="debiased_model.bin", help="The name of the embedding")
-    parser.add_argument("--model_alias", default = "dagw_word2vec", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
+    parser.add_argument("--model_alias", default = "DAGW", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
 
     # parse args
     args = parser.parse_args()
@@ -77,21 +77,19 @@ if __name__ == "__main__":
     plot_words(model, args.model_alias, profession_sample, gender_specific_sample, "Original Professions", "orig")
     plot_words(debiased_model, args.model_alias, profession_sample, gender_specific_sample, "Debiased Professions", "debiased")
 
-    #plot equalize example
-
+    # plot equalize example
     eq_pairs = ['mand', 'kvinde', 'pige', 'dreng', 'bedstemor', 'bedstefar', 'mor', 'far']
     gn_word = ["skole"]
-    plot_title = "Equalized Pairs Projected on 'School'"
-    equalize_visualization(model, eq_pairs, gn_word, args.model_alias, plot_title, "orig")
-    equalize_visualization(debiased_model, eq_pairs, gn_word, args.model_alias, plot_title, "debiased")
+    equalize_visualization(model, eq_pairs, gn_word, args.model_alias, "orig")
+    equalize_visualization(debiased_model, eq_pairs, gn_word, args.model_alias, "debiased")
 
     # define wordlist for t-sne
-    #tsne_words = set(male+female+arts+math+family+career)
+    tsne_words = set(male+female+arts+math+family+career)
 
     # test embedding is loaded
-    #model.most_similar("kvinde")
+    model.most_similar("kvinde")
     
     # restrict embedding
-    #restrict_wv(model, tsne_words)
+    restrict_wv(model, tsne_words)
 
-    #tsne_plot(model, args.model_alias)
+    tsne_plot(model, args.model_alias)
