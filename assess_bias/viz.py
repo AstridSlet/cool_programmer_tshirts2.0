@@ -37,12 +37,10 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
     # flipped
     y = np.flipud(y_ax)
     
-    print("y: ", y, " x: ", x)
     # normalize
     x/= np.linalg.norm(x)
     y/= np.linalg.norm(y)
-    print("y: ", y, " x: ", x)
-    
+        
     # Get pseudo-inverse matrix
     W = np.array(vectors)
     B = np.array([x,y])
@@ -65,6 +63,8 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
     #plt.ylim([-0.25, 0.25])
     plt.axvline(color= 'lightgrey')
     plt.axhline(color= 'lightgrey')
+    plt.xlabel("Gender Subspace")
+    plt.ylabel("Gender Neutrality")
     
     #plot the wordlist
     plt.scatter(Wp[0,:int(len(professions))], 

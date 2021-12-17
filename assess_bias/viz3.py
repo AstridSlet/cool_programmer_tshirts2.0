@@ -178,3 +178,33 @@ for i, txt in enumerate(Wl):
 plt.show()
 
 '''
+
+'''
+
+Wl = ['skole', 'mand', 'kvinde', 'pige', 'dreng', 'bedstemor', 'bedstefar', 'mor', 'far'] 
+
+Wv = []
+for i in range(len(Wl)):
+    Wv.append(model[Wl[i]])
+b1 = Wv[0]
+b2 = (Wv[2]-Wv[1])
+
+W = np.array(Wv)
+B = np.array([b1,b2])
+Bi = np.linalg.pinv(B.T)
+
+Wp = np.matmul(Bi,W.T)
+print(Wp.shape)
+Wp = (Wp.T-[Wp[0,2],Wp[1,0]]).T
+
+plt.figure(figsize=(12,7))
+plt.axvline()
+plt.axhline()
+plt.scatter(Wp[0,:], Wp[1,:])
+rX = max(Wp[0,:])-min(Wp[0,:])
+rY = max(Wp[1,:])-min(Wp[1,:])
+eps = 0.005
+for i, txt in enumerate(Wl):
+    plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
+plt.show()
+'''

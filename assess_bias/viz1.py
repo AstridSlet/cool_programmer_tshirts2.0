@@ -10,12 +10,8 @@ if sys.version_info[0] < 3:
     import io
     open = io.open
 plt.style.use("seaborn")
- 
 
-model = KeyedVectors.load_word2vec_format('/work/Exam/cool_programmer_tshirts2.0/embeddings/conll17da_debiased_model.bin', binary=True) 
-
-
-def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title):
+def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title, biased):
 
     # load x-axis
     y = np.loadtxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), delimiter=',')
@@ -52,8 +48,9 @@ def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title
     plt.axvline(color= 'lightgrey')
     plt.axhline(color= 'lightgrey')
     
-    plt.xlabel("Projection of 'school'")
+    plt.xlabel("Projection of school")
     plt.ylabel("Gender subspace")
+    
     #plot the wordlist
     plt.scatter(Wp[0,:1],Wp[1,:1], color = 'black', marker= "x", s = 200)
     plt.scatter(Wp[0,1:3],Wp[1,1:3], color = 'mediumseagreen', marker= "o")
@@ -72,14 +69,8 @@ def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, plot_title
     
     for i, txt in enumerate(wordlist):
         if txt == "skole":
-            plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize= 'xx-large', c = 'black')
+            plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*(eps+0.02)), fontsize= 'xx-large', c = 'black')
         else:
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize = 'large') # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
     
-    plt.savefig(os.path.join("..", "output", f"{model_alias}_eq_plot.png"))
-
-eq_pairs = ['mand', 'kvinde', 'pige', 'dreng', 'bedstemor', 'bedstefar', 'mor', 'far']
-gn_word = ["skole"]
-model_alias = "conll17da"
-plot_title = "Equalized Pairs Projected on the Gender Neutral Word 'School'"
-equalize_visualization(model, eq_pairs, gn_word, model_alias, plot_title)
+    plt.savefig(os.path.join("..", "output", f"{biased}{model_alias}_eq_plot.png"))
