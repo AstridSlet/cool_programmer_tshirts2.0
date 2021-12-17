@@ -12,7 +12,7 @@ if sys.version_info[0] < 3:
     open = io.open
 """
 Hard-debias embedding
-
+ 
 Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings
 Tolga Bolukbasi, Kai-Wei Chang, James Zou, Venkatesh Saligrama, and Adam Kalai
 2016
