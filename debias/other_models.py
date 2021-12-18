@@ -19,7 +19,6 @@ else:
 from gensim.models import FastText
 model = FastText.load("/work/Exam/cool_programmer_tshirts2.0/embeddings/FT.model")
 
-
 class WordEmbedding:
     def __init__(self, fname):
         self.thresh = None
