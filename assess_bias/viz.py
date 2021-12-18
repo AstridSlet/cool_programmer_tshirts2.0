@@ -17,8 +17,6 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
     # load x-axis
     x = np.loadtxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), delimiter=',')
 
-    #x_ax = ['mand', 'kvinde']
-
     # load vector for y-axis
     y_ax = np.loadtxt(os.path.join("..", "output", f"{model_alias}_neutrality.csv"), delimiter=',')
 
@@ -30,10 +28,7 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
     
     # retrieve vectors
     vectors = [embedding[k] for k in wordlist]
-
-    # To-be basis
-    #x = (vectors[1]-vectors[0])
-    
+   
     # flipped
     y = np.flipud(y_ax)
     
@@ -67,13 +62,14 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
     plt.ylabel("Gender Neutrality")
     
     #plot the wordlist
-    plt.scatter(Wp[0,:int(len(professions))], 
+    gender_specific_scatter = plt.scatter(Wp[0,:int(len(professions))], 
         Wp[1,:int(len(professions))], 
-        color = 'orchid', marker= "o")
-    plt.scatter(Wp[0,int(len(professions)):int(len(professions+gender_specific))],
+        color = 'darkorchid', marker= "o")
+    professions_scatter = plt.scatter(Wp[0,int(len(professions)):int(len(professions+gender_specific))],
         Wp[1,int(len(professions)):int(len(professions+gender_specific))], 
         color = 'mediumseagreen', marker= "o")
     #plt.scatter(Wp[0,:2], Wp[1,:2], color = 'lightgrey', marker= "x")
+    plt.legend((gender_specific_scatter, professions_scatter),('Gender specific', 'Professions'),scatterpoints=1,loc='upper left',ncol=1,fontsize=8)
 
     rX = max(Wp[0,:])-min(Wp[0,:])
     rY = max(Wp[1,:])-min(Wp[1,:])
@@ -145,3 +141,67 @@ def tsne_plot(model, model_alias):
     plt.savefig(os.path.join("..", "output", f"tsne_plot_{model_alias}.png"))
     plt.show()
 
+
+def equalize_visualization(embedding, eq_pairs, gn_word, model_alias, biased, plot_title):
+
+    # load x-axis
+    y = np.loadtxt(os.path.join("..", "output", f"{model_alias}_gender_subspace.csv"), delimiter=',')
+
+    #combine
+    wordlist = gn_word + eq_pairs
+    
+    # choose only words that are in the embeddings
+    wordlist = [w for w in wordlist if w in embedding.vocab]
+    
+    # retrieve vectors
+    vectors = [embedding[k] for k in wordlist]
+
+  
+    x = vectors[0]
+    
+    # Get pseudo-inverse matrix
+    W = np.array(vectors)
+    B = np.array([x,y])
+    Bi = np.linalg.pinv(B.T)
+
+    # Project all the words
+    Wp = np.matmul(Bi,W.T)
+    Wp = (Wp.T-[Wp[0,2],Wp[1,0]]).T
+    
+    #PLOT
+    plt.figure(figsize=(12,7))
+    
+    plt.title(label=plot_title,
+            fontsize=30,
+            color="black")
+    #plt.xlim([-0.8, 0.8])
+    #plt.ylim([-0.25, 0.25])
+    plt.axvline(color= 'lightgrey')
+    plt.axhline(color= 'lightgrey')
+    
+    plt.xlabel("Projection of school", fontsize=22)
+    plt.ylabel("Gender subspace", fontsize=22)
+    
+    #plot the wordlist
+    plt.scatter(Wp[0,:1],Wp[1,:1], color = 'black', marker= "x", s = 200)
+    plt.scatter(Wp[0,1:3],Wp[1,1:3], color = 'mediumseagreen', marker= "o")
+    plt.plot(Wp[0,1:3],Wp[1,1:3], color = 'mediumseagreen', marker= "o", alpha =0.3, linestyle='dashed')
+    plt.scatter(Wp[0,3:5],Wp[1,3:5], color = 'darkorchid', marker= "o")
+    plt.plot(Wp[0,3:5],Wp[1,3:5], color = 'darkorchid', marker= "o", alpha =0.3, linestyle='dashed')
+    plt.scatter(Wp[0,5:7],Wp[1,5:7], color = 'dodgerblue', marker= "o")
+    plt.plot(Wp[0,5:7],Wp[1,5:7], color = 'dodgerblue', marker= "o", alpha =0.3, linestyle='dashed')
+    plt.scatter(Wp[0,7:9],Wp[1,7:9], color = 'indianred', marker= "o")
+    plt.plot(Wp[0,7:9],Wp[1,7:9], color = 'indianred', marker= "o", alpha =0.3, linestyle='dashed')
+    
+    plt.plot()
+    rX = max(Wp[0,:])-min(Wp[0,:])
+    rY = max(Wp[1,:])-min(Wp[1,:])
+    eps = 0.005
+    
+    for i, txt in enumerate(wordlist):
+        if txt == "skole":
+            plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*(eps+0.02)), fontsize= 'xx-large', c = 'black')
+        else:
+            plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize = 'large') # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
+    
+    plt.savefig(os.path.join("..", "output", f"{biased}{model_alias}_eq_plot.png"))
