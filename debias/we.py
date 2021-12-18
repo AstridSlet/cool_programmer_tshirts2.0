@@ -254,9 +254,10 @@ def doPCA(pairs, embedding, num_components = 0.95):
 
 def plotPCA(pca, model_alias, n_components):
     plt.bar(range(pca.n_components_), pca.explained_variance_ratio_, color = "seagreen")
-    plt.title(f"Explained variance by PCA components - model: {model_alias}")
-    plt.xlabel("PCA components")
-    plt.ylabel("Explained variance")
+    plt.title(f"Explained variance by PCA components: {model_alias}", fontsize=30)
+    plt.ylim([0.0, 0.7])
+    plt.xlabel("PCA components", fontsize=22)
+    plt.ylabel("Explained variance", fontsize=22)
     print ("PCA plot saved to output folder")
     plt.savefig(os.path.join("..", "output", f"{model_alias}_pca_plot.png"))
     

@@ -12,12 +12,12 @@ if sys.version_info[0] < 3:
     open = io.open
 """
 Hard-debias embedding
-
+ 
 Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings
 Tolga Bolukbasi, Kai-Wei Chang, James Zou, Venkatesh Saligrama, and Adam Kalai
 2016
 """
-
+ 
 
 def debias(E, gender_specific_words, definitional, equalize, model_alias):
     # do PCA analysis
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     parser.add_argument("--gendered_words_filename", default = "da_gender_specific_full.json",help="File containing words not to neutralize (one per line)")
     parser.add_argument("--equalize_filename", default = "da_equalize_pairs.json", help="Word pairs for equalizing")
     parser.add_argument("--debiased_filename", default = "debiased_model.bin", help="???.bin")
-    parser.add_argument("--model_alias", default = "dagw_word2vec", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
+    parser.add_argument("--model_alias", default = "DAGW", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
 
     # parse args
     args = parser.parse_args()
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         embedding_filename = os.path.join("..","embeddings", args.embedding_filename)
     definitional_filename = os.path.join("..","data", args.definitional_filename)
     print(definitional_filename)
-    gendered_words_filename = os.path.join("..","data", args.gendered_words_filename)
+    gendered_words_filename = os.path.join("..","data", f"{args.model_alias}_{args.gendered_words_filename}")
     equalize_filename = os.path.join("..","data", args.equalize_filename)
     model_alias = args.model_alias
     debiased_filename = os.path.join("..","embeddings", f"{model_alias}_{args.debiased_filename}")
