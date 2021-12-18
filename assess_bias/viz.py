@@ -58,8 +58,8 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
     #plt.ylim([-0.25, 0.25])
     plt.axvline(color= 'lightgrey')
     plt.axhline(color= 'lightgrey')
-    plt.xlabel("Gender Subspace")
-    plt.ylabel("Gender Neutrality")
+    plt.xlabel("Gender Subspace", fontsize = 20)
+    plt.ylabel("Gender Neutrality", fontsize = 20)
     
     #plot the wordlist
     gender_specific_scatter = plt.scatter(Wp[0,:int(len(professions))], 
@@ -69,7 +69,7 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
         Wp[1,int(len(professions)):int(len(professions+gender_specific))], 
         color = 'mediumseagreen', marker= "o")
     #plt.scatter(Wp[0,:2], Wp[1,:2], color = 'lightgrey', marker= "x")
-    plt.legend((gender_specific_scatter, professions_scatter),('Gender specific', 'Professions'),scatterpoints=1,loc='upper left',ncol=1,fontsize=8)
+    plt.legend((gender_specific_scatter, professions_scatter),('Gender specific', 'Professions'),scatterpoints=1,loc='upper left',ncol=1,fontsize=15, frameon=True)
 
     rX = max(Wp[0,:])-min(Wp[0,:])
     rY = max(Wp[1,:])-min(Wp[1,:])
@@ -79,7 +79,7 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
         if txt == "kvinde" or txt == "mand":
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize= 'xx-large', c = 'black')
         else:
-            plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
+            plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps), fontsize = 'large') # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
     
     plt.savefig(os.path.join("..", "output", f"{biased}_{model_alias}_gender_plot.png"))
 
