@@ -81,7 +81,7 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
         else:
             plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rY*eps)) # changed from #plt.annotate(txt, (Wp[0,i]+rX*eps, Wp[1,i]+rX*eps))
     
-    plt.savefig(os.path.join("..", "output", f"{biased}_{model_alias}_2_gender_plot.png"))
+    plt.savefig(os.path.join("..", "output", f"{biased}_{model_alias}_gender_plot.png"))
 
 def restrict_wv(wv, restricted_word_set):
     new_vectors = []
