@@ -82,9 +82,9 @@ if __name__ == "__main__":
     # plot equalize example
     eq_pairs = ['mand', 'kvinde', 'pige', 'dreng', 'bedstemor', 'bedstefar', 'mor', 'far']
     gn_word = ["skole"]
-    equalize_visualization(model, eq_pairs, gn_word, args.model_alias, "orig", f"Gender Specific Pairs projected on 'school'")
-    equalize_visualization(debiased_model, eq_pairs, gn_word, args.model_alias, "debiased", f"Debiased Pairs projected on 'school'")
-    '''
+    equalize_visualization(model, eq_pairs, gn_word, args.model_alias, "orig", f"Gender Specific Pairs projected on {gn_word[0]}")
+    equalize_visualization(debiased_model, eq_pairs, gn_word, args.model_alias, "debiased", f"Debiased Pairs projected on {gn_word[0]}")
+    
     #T-SNE
 
     # define wordlist for t-sne
@@ -97,4 +97,4 @@ if __name__ == "__main__":
     restrict_wv(model, tsne_words)
 
     tsne_plot(model, args.model_alias)
-    '''
+    
