@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # define args
     parser = argparse.ArgumentParser()
     parser.add_argument("--embedding_filename", default="DAGW-model(1).bin", help="The name of the embedding. Choose from daNLP: 'conll17.da.wv', 'wiki.da.wv', 'cc.da.wv'")    
-    parser.add_argument("--num_training", type=int, default = 50000, help="N words in training set")
+    parser.add_argument("--num_training", type=int, default = 25000, help="N words in training set")
     parser.add_argument("--gender_specific_seed_words", type=str, default="da_gender_specific_seed.json", help="Filename gender specific seed")
     parser.add_argument("--outfile", type=str, default = "da_gender_specific_full.json", help="Filename gender specific full")
     parser.add_argument("--model_alias", default = "DAGW", help="Model alias including embedding type (word2vec, fasttext, wv, etc. or the corpus that it was trained on")
@@ -99,8 +99,8 @@ if __name__ == "__main__":
     savetxt(os.path.join("..", "output", f"{args.model_alias}_neutrality.csv"), direction, delimiter=',')
 
     # save full gender specific
-    with open(outfile, "w") as f:
-        json.dump(full_gender_specific, f)
+    with open(outfile, "w", encoding='utf8') as f:
+        json.dump(full_gender_specific, f, ensure_ascii=False)
     
     print("\n\nDone!\n")
         
