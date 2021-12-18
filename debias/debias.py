@@ -17,7 +17,7 @@ Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embedding
 Tolga Bolukbasi, Kai-Wei Chang, James Zou, Venkatesh Saligrama, and Adam Kalai
 2016
 """
-
+ 
 
 def debias(E, gender_specific_words, definitional, equalize, model_alias):
     # do PCA analysis
