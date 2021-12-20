@@ -28,8 +28,8 @@ if __name__ == "__main__":
     else:
         model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", args.embedding_filename), binary=True)
      
-    print("loading debiased model")
-    debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"), binary=True)
+    #print("loading debiased model")
+    #debiased_model = KeyedVectors.load_word2vec_format(os.path.join("..", "embeddings", f"{args.model_alias}_{args.debiased_filename}"), binary=True)
     
     # WEAT 
 
@@ -46,37 +46,27 @@ if __name__ == "__main__":
     print("getting WEAT scores")
     
     # get WEAT scores model
-    weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(model, f"biased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    #weat_func(model, f"biased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
 
     # get WEAT scores debiased model
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
-    weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "career", "family", 10000, male, female, career, family)
+    #weat_func(debiased_model, f"debiased_{args.model_alias}", "math", "arts", 10000, male, female, math, arts)
     
     # ASSESMENT PLOTS
-    '''
+   
     # load professions
-    professions_path = os.path.join("..", "data", "da_professions.json")
+    professions_path = os.path.join("..", "data", "da_professions_sample.json")
     with open(professions_path, "r") as f:
-        profession_words = json.load(f)
+        profession_sample = json.load(f)
 
     # load gender specific words
-    genderspecific_path = os.path.join("..", "data", "da_gender_specific_seed.json")
+    genderspecific_path = os.path.join("..", "data", "da_gender_specific_sample.json")
     with open(genderspecific_path, "r") as f:
-        gender_specific_words = json.load(f)
-    '''
-
-    # example words 
-    profession_sample = ['sygeplejerske', 'sekretær', 'læge', 'præst', 'brandmand', 'frisør', 'politimand', 'prostitueret', 'pilot', 'soldat']#random.sample(profession_words, 10)
-    gender_specific_sample = ['konge', 'dronning', 'mor', 'far', 'han', 'hun', 'livmoder', 'penis', 'bedstefar', 'bedstemor']#random.sample(gender_specific_words, 10)
-    #combined = profession_sample + gender_specific_sample
-    '''
-    # get similarity scores: professions projected onto gender direction
-    print_similarities(args.embedding_filename, combined)
-    print_similarities(args.debiased_filename, combined)
-    '''
+        gender_specific_sample = json.load(f)
+    
     # plot profession words
-    #plot_words(model, args.model_alias, profession_sample, gender_specific_sample, "Original Professions", "orig")
+    plot_words(model, args.model_alias, profession_sample, gender_specific_sample, "Original Professions", "orig")
     #plot_words(debiased_model, args.model_alias, profession_sample, gender_specific_sample, "Debiased Professions", "debiased")
     
     # plot equalize example
@@ -85,9 +75,8 @@ if __name__ == "__main__":
     equalize_visualization(model, eq_pairs, gn_word, args.model_alias, "orig", f"Gender Specific Pairs projected on {gn_word[0]}")
     equalize_visualization(debiased_model, eq_pairs, gn_word, args.model_alias, "debiased", f"Debiased Pairs projected on {gn_word[0]}")
     
-    #T-SNE
-
-    # define wordlist for t-sne
+    # create t-SNE plot
+    # define wordlist 
     tsne_words = set(male+female+arts+math+family+career)
 
     # test embedding is loaded
@@ -96,5 +85,6 @@ if __name__ == "__main__":
     # restrict embedding
     restrict_wv(model, tsne_words)
 
-    tsne_plot(model, args.model_alias)
+    # plot words
+    tsne_plot(model, args.model_alias, male, female, career, family, math, arts)
     

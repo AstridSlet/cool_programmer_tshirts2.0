@@ -69,7 +69,7 @@ def plot_words(embedding, model_alias, professions, gender_specific, bias_type, 
         Wp[1,int(len(professions)):int(len(professions+gender_specific))], 
         color = 'mediumseagreen', marker= "o")
     #plt.scatter(Wp[0,:2], Wp[1,:2], color = 'lightgrey', marker= "x")
-    plt.legend((gender_specific_scatter, professions_scatter),('Gender specific', 'Professions'),scatterpoints=1,loc='upper left',ncol=1,fontsize=15, frameon=True)
+    plt.legend((gender_specific_scatter, professions_scatter),('Professions', 'Gender specific'),scatterpoints=1,loc='upper left',ncol=1,fontsize=15, facecolor='white', framealpha=1, frameon=True)
 
     rX = max(Wp[0,:])-min(Wp[0,:])
     rY = max(Wp[1,:])-min(Wp[1,:])
@@ -107,7 +107,7 @@ def restrict_wv(wv, restricted_word_set):
     wv.index2word = np.array(new_index2entity)
     wv.vectors_norm = np.array(new_vectors_norm)
  
-def tsne_plot(model, model_alias):
+def tsne_plot(model, model_alias, male, female, career, family, math, arts):
     "Creates and TSNE model and plots it"
     labels = []
     tokens = []
@@ -130,11 +130,19 @@ def tsne_plot(model, model_alias):
             fontsize=30,
             color="black")
     # add dots
-    for i in range(len(x)):
-        if labels[i] in male_labels:
-            plt.scatter(x[i],y[i], color="..")
-        elif labels[i] in male_labels:
-            ...
+    for label,i in zip(labels, range(len(x))):
+        if label in male:
+            a = plt.scatter(x[i],y[i], color="b")
+        elif label in female:
+            b = plt.scatter(x[i],y[i], color="c")
+        elif label in career:
+            c = plt.scatter(x[i],y[i], color="r")
+        elif label in family:
+            d = plt.scatter(x[i],y[i], color="g")
+        elif label in math:
+            e = plt.scatter(x[i],y[i], color="m")
+        elif label in arts:
+            f = plt.scatter(x[i],y[i], color="y")
     # add labels
         plt.annotate(labels[i],
                      xy=(x[i], y[i]),
@@ -143,6 +151,7 @@ def tsne_plot(model, model_alias):
                      fontsize = 14,
                      ha='right',
                      va='bottom')
+    plt.legend((a, b, c, d, e, f),("male", "female", "career", "family", "math", "arts"),scatterpoints=1,ncol=2,fontsize=15, facecolor='white', framealpha=1, frameon=True)
     plt.savefig(os.path.join("..", "output", f"tsne_plot_{model_alias}.png"))
     plt.show()
 
