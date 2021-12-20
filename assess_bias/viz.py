@@ -11,7 +11,7 @@ if sys.version_info[0] < 3:
     open = io.open
 plt.style.use("seaborn")
 from sklearn.manifold import TSNE
-
+ 
 def plot_words(embedding, model_alias, professions, gender_specific, bias_type, biased):
 
     # load x-axis
@@ -126,11 +126,16 @@ def tsne_plot(model, model_alias):
         y.append(value[1])
         
     plt.figure(figsize=(12, 12), dpi=600) 
-    for i in range(len(x)):
-        plt.title(label=f"t-SNE plot: {model_alias}",
+    plt.title(label=f"t-SNE plot: {model_alias}",
             fontsize=30,
             color="black")
-        plt.scatter(x[i],y[i])
+    # add dots
+    for i in range(len(x)):
+        if labels[i] in male_labels:
+            plt.scatter(x[i],y[i], color="..")
+        elif labels[i] in male_labels:
+            ...
+    # add labels
         plt.annotate(labels[i],
                      xy=(x[i], y[i]),
                      xytext=(5, 2),
