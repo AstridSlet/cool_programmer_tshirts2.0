@@ -12,6 +12,8 @@ import argparse
 from we import *
 from sklearn.svm import LinearSVC
 import json
+import nltk
+nltk.download('omw-1.4')
 from numpy import savetxt
 if sys.version_info[0] < 3:
     import io
