@@ -20,7 +20,7 @@
 
 
 ## Project information
-This repository contains code for reproducing our analysis regarding gender bias in Danish pre-trained word embeddings. The steps include: 1) removing gender bias in the word embeddings with hard-debiasing [Bolukbasi et al. (2016)](https://proceedings.neurips.cc/paper/2016/file/a486cd07e4ac3d270571622f4f316ec5-Paper.pdf), and 2) Assessing bias in the word embeddings with the Word Embeddings Association Test (WEAT) [Caliskan et al. (2017)](http://omeka.unibe.ch/files/original/49b5837cb8707025e98129ca035026e0f2143d76.pdf).
+This repository contains code for reproducing our analysis regarding gender bias in Danish pre-trained word embeddings. The steps include: 1. removing gender bias in the word embeddings with hard-debiasing [Bolukbasi et al. (2016)](https://proceedings.neurips.cc/paper/2016/file/a486cd07e4ac3d270571622f4f316ec5-Paper.pdf), and 2. Assessing bias in the word embeddings with the Word Embeddings Association Test (WEAT) [Caliskan et al. (2017)](http://omeka.unibe.ch/files/original/49b5837cb8707025e98129ca035026e0f2143d76.pdf).
 
 The first part (removing bias) produces a debiased version of the input word-embedding, which is saved to the folder ```embeddings```. 
 
@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```
 You can then run the pipeline on the CONLL-17 embedding by following the steps below. 
 
-### 1) Debias 
+### 1. Debias 
 You first train a classifier to classify if words in the embedding are _gender specific_ or _gender neutral_.
 
 ``` 
@@ -61,7 +61,7 @@ python debias.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debia
 ```
 This will produce a debiased version of the word embedding which is saved in the ```embeddings``` folder. 
 
-### 2) Assess bias 
+### 2. Assess bias 
 You can now assess bias in the original and debiased word embedding with:
 
 ```
