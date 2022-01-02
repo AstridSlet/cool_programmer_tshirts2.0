@@ -65,6 +65,7 @@ This will produce a debiased version of the word embedding which is saved in the
 You can now assess bias in the original and debiased word embedding with:
 
 ```
+cd cool_programmer_tshirts2.0/assess_bias
 python main.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiased_model.bin' --model_alias 'conll17da'
 ```
 
