@@ -22,7 +22,7 @@
 ## Project information
 This repository contains code for reproducing our analysis regarding gender bias in Danish pre-trained word embeddings. The steps include: 1) removing gender bias in the word embeddings with hard-debiasing [Bolukbasi et al. (2016)](https://proceedings.neurips.cc/paper/2016/file/a486cd07e4ac3d270571622f4f316ec5-Paper.pdf), and 2) Assessing bias in the word embeddings with the Word Embeddings Association Test (WEAT) [Caliskan et al. (2017)](http://omeka.unibe.ch/files/original/49b5837cb8707025e98129ca035026e0f2143d76.pdf).
 
-The first part (removing bias) produces a debiased version of the input word-embedding, which is saved to the folder 'embeddings'. 
+The first part (removing bias) produces a debiased version of the input word-embedding, which is saved to the folder ```embeddings```. 
 
 The second part (assessing bias) produces WEAT scores for two of the gender biases from Caliskan et al. (2017): career-family and math-arts. 
 
@@ -59,7 +59,7 @@ Using this list you can now debias the word embedding with:
 ```
 python debias.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiased_model.bin' --model_alias 'conll17da'
 ```
-This will produce a debiased version of the word embedding which is saved in the embeddings folder. 
+This will produce a debiased version of the word embedding which is saved in the ```embeddings``` folder. 
 
 #### Assess bias 
 You can now assess bias in the original and debiased word embedding with:
@@ -77,7 +77,7 @@ If you wish to try the method on other embeddings you simply replace the embeddi
 - 'wiki.da.wv'
 - 'cc.da.wv'
 
-If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the embeddings folder and running the steps above and replacing the --embedding_filename with the name of the embeddings as well as the --model_alias argument. 
+If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the ```embeddings``` folder and running the steps above and replacing the --embedding_filename with the name of the embeddings as well as the --model_alias argument. 
 
 ## Contact details
 If you have any questions regarding the project itself or the code implementation, feel free to contact us: ([Thea Rolskov Sloth](mailto:201706833@post.au.dk), [Astrid Sletten Rybner](mailto:201808935@post.au.dk))
