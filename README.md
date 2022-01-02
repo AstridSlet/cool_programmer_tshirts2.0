@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/DaDebias/cool_programmer_tshirts2.0">
-    <img src="readme_images/cool.png" alt="Logo" width=150 height=150>
+    <img src="cool.png" alt="Logo" width=150 height=150>
   </a>
   
   <h1 align="center">Exam Project: Natural Language Processing</h1> 
@@ -35,34 +35,56 @@ The repository includes one folder containing the code for each of these two ste
 ```debias``` | scripts for removing bias 
 ```embeddings```| folder for original/debiased embeddings
 ```output``` | output folder for output WEAT scores and plots
-```readme_images``` | images used in the readme files
 
 ## Usage
+This repository contains an example run of debiasing the pre-trained word embedding CONLL-2017 from [daNLP](https://github.com/alexandrainst/danlp). 
+To reproduce the analysis, you need to clone this repository and install the required packages with:
 
-The original and debiased embeddings are placed in the embeddings folder.  
+```
+git clone https://github.com/DaDebias/cool_programmer_tshirts2.0
+cd /DaDebias/cool_programmer_tshirts2.0
+pip install -r requirements.txt
+```
+You can then run the pipeline on the CONLL-17 embedding by following the steps below. 
 
-The analysis included the application of these two steps on 
+#### Debias 
+You first train a classifier to classify if words in the embedding are _gender specific_ or _gender neutral_.
 
-The method can be used on the following pre-trained word embeddings from [daNLP](https://github.com/alexandrainst/danlp):
-- 'conll17.da.wv'
-- 'wiki.da.wv'
-- 'cc.da.wv'
-
-
-#### To run the debiasing method on pre-trained word embeddings from daNLP, the following steps should be followed:
-
-##### Train a classifier to classify if a word is _gender specific_ or _gender neutral_.
 ``` 
+cd cool_programmer_tshirts2.0/debias
 python learn_gender_specific.py --embedding_filename 'conll17.da.wv' --model_alias 'conll17da'
 ```
-
-##### Debias the word embedding:
+Using this list you can now debias the word embedding with: 
 
 ```
 python debias.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiased_model.bin' --model_alias 'conll17da'
 ```
+This will produce a debiased version of the word embedding which is saved in the embeddings folder. 
 
-##### Assess the original embedding and its debiased version:
+#### Assess bias 
+You can now assess bias in the original and debiased word embedding with:
+
 ```
 python main.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiased_model.bin' --model_alias 'conll17da'
 ```
+
+#### Debiasing other word embeddings
+The analysis included the application of these two steps on the CONLL-17 model from [daNLP](https://github.com/alexandrainst/danlp). 
+
+If you wish to try the method on other embeddings you simply replace the embedding name in the above line with either of these embedding names: 
+- 'conll17.da.wv'
+- 'wiki.da.wv'
+- 'cc.da.wv'
+
+If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the embeddings folder and running the steps above and replacing the --embedding_filename with the name of the embeddings as well as the --model_alias argument. 
+
+## Contact details
+If you have any questions regarding the project itself or the code implementation, feel free to contact us: ([Thea Rolskov Sloth](mailto:201706833@post.au.dk), [Astrid Sletten Rybner](mailto:201808935@post.au.dk))
+
+## Acknowledgements
+We would like to give special thanks to the following projects for providing code:
+* [Bolukbasi et al. (2016)](https://github.com/tolga-b/debiaswe) authors of the main code used for debiasing word embeddings. 
+* [Caliskan et al. (2017)](http://omeka.unibe.ch/files/original/49b5837cb8707025e98129ca035026e0f2143d76.pdf) author of the articles behind the WEAT test.
+* [Millie Søndergaard](https://github.com/milsondergaard/speciale) that created the python implementation of the WEAT used for this analysis. 
+* [daNLP](https://github.com/alexandrainst/danlp) for providing pre-trained word embeddings. 
+* [Sofie Ditmer](https://github.com/sofieditmer) and [Astrid Nørgaard]() for lending us a [word embedding](https://github.com/TheNLPlayPlatform/NLPlay.git) trained on the [Danish Gigaword corpus](https://gigaword.dk/). 
