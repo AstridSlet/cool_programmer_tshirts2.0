@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```
 You can then run the pipeline on the CONLL-17 embedding by following the steps below. 
 
-#### Debias 
+### 1) Debias 
 You first train a classifier to classify if words in the embedding are _gender specific_ or _gender neutral_.
 
 ``` 
@@ -61,7 +61,7 @@ python debias.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debia
 ```
 This will produce a debiased version of the word embedding which is saved in the ```embeddings``` folder. 
 
-#### Assess bias 
+### 2) Assess bias 
 You can now assess bias in the original and debiased word embedding with:
 
 ```
