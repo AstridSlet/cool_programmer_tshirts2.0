@@ -77,10 +77,10 @@ If you wish to try the method on other embeddings you simply replace the --embed
 - 'wiki.da.wv'
 - 'cc.da.wv'
 
-If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the ```embeddings``` folder and running the steps above and replacing the --embedding_filename as well as the --model_alias argument with the name of the embeddings.
+If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the ```embeddings``` folder and running the steps above and replacing the --embedding_filename as well as the --model_alias argument with the name of the embedding.
 
 ## Contact details
-If you have any questions regarding the project itself or the code implementation, feel free to contact us: ([Thea Rolskov Sloth](mailto:201706833@post.au.dk), [Astrid Sletten Rybner](mailto:201808935@post.au.dk))
+If you have any questions regarding the project itself or the code implementation, feel free to contact us via e-mail: [Thea Rolskov Sloth](mailto:201706833@post.au.dk) & [Astrid Sletten Rybner](mailto:201808935@post.au.dk)
 
 ## Acknowledgements
 We would like to give special thanks to the following projects for providing code:
