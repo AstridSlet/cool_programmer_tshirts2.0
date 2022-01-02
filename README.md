@@ -72,12 +72,12 @@ python main.py --embedding_filename 'conll17.da.wv' --debiased_filename 'debiase
 #### Debiasing other word embeddings
 The analysis included the application of these two steps on the CONLL-17 model from [daNLP](https://github.com/alexandrainst/danlp). 
 
-If you wish to try the method on other embeddings you simply replace the embedding name in the above line with either of these embedding names: 
+If you wish to try the method on other embeddings you simply replace the --embedding_filename as well as the --model_alias in the above line with either of these embedding names: 
 - 'conll17.da.wv'
 - 'wiki.da.wv'
 - 'cc.da.wv'
 
-If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the ```embeddings``` folder and running the steps above and replacing the --embedding_filename with the name of the embeddings as well as the --model_alias argument. 
+If you have a downloaded pretrained word embedding as a txt file, you can run the pipeline on this embedding, by placing it in the ```embeddings``` folder and running the steps above and replacing the --embedding_filename as well as the --model_alias argument with the name of the embeddings.
 
 ## Contact details
 If you have any questions regarding the project itself or the code implementation, feel free to contact us: ([Thea Rolskov Sloth](mailto:201706833@post.au.dk), [Astrid Sletten Rybner](mailto:201808935@post.au.dk))
